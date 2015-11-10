@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>it.peruvianit.ejb</groupId>
+  <artifactId>authentication-client</artifactId>
+  <name>Authentication Interface</name>
+  
+  <dependencies>
+  	<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
+			<version>${jboss-ejb-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>${javaee-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.ejb3</groupId>
+			<artifactId>jboss-ejb3-ext-api</artifactId>
+			<version>${jboss-ejb3-ext-api.version}</version>
+			<scope>provided</scope>
+		</dependency>		
+  </dependencies>
+  
+  <parent>
+    	<groupId>it.peruvianit.jee</groupId>
+    	<artifactId>jee</artifactId>
+    	<version>${global.version}</version>
+  		<relativePath>../Master/pom.xml</relativePath>
+    </parent>
+</project>
