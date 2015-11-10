@@ -1,5 +1,5 @@
 =====
-JEE
+JEE API Rest JAX-RS/JAX-WS
 =====
 
 """Applicazione JEE."""
