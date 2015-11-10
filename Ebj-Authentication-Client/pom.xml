@@ -4,6 +4,13 @@
   <artifactId>authentication-client</artifactId>
   <name>Authentication Interface</name>
   
+  <parent>
+    	<groupId>it.peruvianit.jee</groupId>
+    	<artifactId>jee</artifactId>
+    	<version>${global.version}</version>
+  		<relativePath>../Master/pom.xml</relativePath>
+  </parent>
+    
   <dependencies>
   	<dependency>
 			<groupId>org.jboss.spec.javax.ejb</groupId>
@@ -25,12 +32,5 @@
 			<version>${jboss-ejb3-ext-api.version}</version>
 			<scope>provided</scope>
 		</dependency>		
-  </dependencies>
-  
-  <parent>
-    	<groupId>it.peruvianit.jee</groupId>
-    	<artifactId>jee</artifactId>
-    	<version>${global.version}</version>
-  		<relativePath>../Master/pom.xml</relativePath>
-    </parent>
+  </dependencies>  
 </project>

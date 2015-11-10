@@ -8,9 +8,9 @@
   <description>Serve per il Build di tutta l'applicazione e condivisione delle variabili globali, Repository, ecc.</description>
   <modules>
   	<module>../Commons</module>
-  	<module>../Ebj-Authentication</module>
-  	<module>../Web</module>
   	<module>../Ebj-Authentication-Client</module>
+  	<module>../Ebj-Authentication</module>
+  	<module>../Web</module>  	
   </modules>
   <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
