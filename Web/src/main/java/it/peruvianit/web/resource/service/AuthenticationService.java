@@ -6,6 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import it.peruvianit.ejb.AuthenticationLocal;
+import it.peruvianit.web.exception.WebApplicationException;
  
 @Path("/login")
 public class AuthenticationService {
@@ -21,8 +22,7 @@ public class AuthenticationService {
 	@GET
 	@Produces("text/plain")
 	@Path("/create-error")
-	public String getError() {		
-		int y = 10/0;
-		return "";
+	public String getError() throws WebApplicationException {		
+		throw new WebApplicationException("Create-error, Api RESTful");
 	}
 }
