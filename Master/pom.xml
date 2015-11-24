@@ -20,6 +20,7 @@
 		<jboss-ejb3-ext-api.version>2.1.0</jboss-ejb3-ext-api.version>
 		<jboss.resteasy.version>2.3.7.Final</jboss.resteasy.version>
 		<resteasy-multipart-provider.version>2.3.7.Final</resteasy-multipart-provider.version>
+		<spring.security.version>3.2.3.RELEASE</spring.security.version>
 		<global.version>0.0.1-SNAPSHOT</global.version>
   </properties>
   <build>

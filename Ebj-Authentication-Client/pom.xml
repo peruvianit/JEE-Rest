@@ -31,6 +31,15 @@
 			<artifactId>jboss-ejb3-ext-api</artifactId>
 			<version>${jboss-ejb3-ext-api.version}</version>
 			<scope>provided</scope>
-		</dependency>		
+		</dependency>	
+		
+		<!-- PROJECT DEPENDENCIES -->
+        <dependency>
+        	<groupId>it.peruvianit</groupId>
+        	<artifactId>commons</artifactId>
+        	<type>jar</type>
+        	<version>${global.version}</version>
+        </dependency>
+        	
   </dependencies>  
 </project>

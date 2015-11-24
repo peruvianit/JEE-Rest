@@ -1,7 +1,7 @@
 package it.peruvianit.web.bean;
 
 public class BeanError {
-	private String typeException;
+	private String type;
 	private int code;
 	private String description;
 	private String message;
@@ -9,9 +9,9 @@ public class BeanError {
 	
 	// Constructors
 	
-	public BeanError(String typeException, int code, String description, String message, String relative) {
+	public BeanError(String type, int code, String description, String message, String relative) {
 		super();
-		this.typeException = typeException;
+		this.type = type;
 		this.code = code;
 		this.description = description;
 		this.message = message;
@@ -20,12 +20,12 @@ public class BeanError {
 
 	// Getters and Setters
 	
-	public String getTypeException() {
-		return typeException;
+	public String getType() {
+		return type;
 	}
 
-	public void setTypeException(String typeException) {
-		this.typeException = typeException;
+	public void setType(String type) {
+		this.type= type;
 	}
 
 	public int getCode() {

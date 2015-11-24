@@ -1,28 +1,29 @@
 package it.peruvianit.web.resource.service;
 
 import javax.ejb.EJB;
-import javax.ws.rs.GET;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 
 import it.peruvianit.ejb.AuthenticationLocal;
-import it.peruvianit.web.exception.WebApplicationException;
+import it.peruvianit.util.token.TokenTransfer;
+import it.peruvianit.util.token.UserDetails;
+import it.peruvianit.web.util.RequestUtil;
  
-@Path("/login")
-public class AuthenticationService {
+@Path("/user")
+public class AuthenticationService {	
 	@EJB
 	AuthenticationLocal authenticationLocal;
 	
-	@GET
-	@Produces("text/plain")
-	public String get() {		
-		return authenticationLocal.infoEJB();
-	}
-	
-	@GET
-	@Produces("text/plain")
-	@Path("/create-error")
-	public String getError() throws WebApplicationException {		
-		throw new WebApplicationException("Create-error, Api RESTful");
+	@Path("authenticate")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public TokenTransfer authenticate(@Context HttpServletRequest requestContext) {	
+		UserDetails userDetails = RequestUtil.getUserDetails(requestContext);
+		
+		return authenticationLocal.generateToken(userDetails);
 	}
 }

@@ -7,10 +7,10 @@
         <dependent-module archiveName="authentication-client-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Ejb-Authentication-client/Ejb-Authentication-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="authentication-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Ejb-Authentication/Ejb-Authentication">
+        <dependent-module archiveName="commons-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Commons/Commons">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="commons-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Commons/Commons">
+        <dependent-module archiveName="authentication-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Ejb-Authentication/Ejb-Authentication">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/Web-App/target/classes"/>

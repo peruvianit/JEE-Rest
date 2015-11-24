@@ -2,10 +2,10 @@ package it.peruvianit.util;
 
 import com.google.gson.GsonBuilder;
 
-public class GsonUtil {
-	public GsonUtil(){};
+public class GsonUtils {
+	public GsonUtils(){};
 	
 	public static String objToJson (final Object object){
-		return new GsonBuilder().create().toJson(object);
+		return new GsonBuilder().setPrettyPrinting().create().toJson(object);
 	}
 }
