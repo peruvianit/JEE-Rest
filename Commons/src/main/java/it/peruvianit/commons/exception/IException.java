@@ -1,4 +1,4 @@
-package it.peruvianit.commos.exception;
+package it.peruvianit.commons.exception;
 
 public interface IException <E extends Exception>{
 }

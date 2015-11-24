@@ -10,8 +10,8 @@ import org.apache.log4j.Logger;
 import org.jboss.resteasy.spi.BadRequestException;
 import org.jboss.resteasy.spi.NotFoundException;
 
-import it.peruvianit.commos.exception.IException;
-import it.peruvianit.util.GsonUtils;
+import it.peruvianit.commons.exception.IException;
+import it.peruvianit.commons.util.GsonUtils;
 import it.peruvianit.web.bean.BeanError;
 import it.peruvianit.web.constant.WebConstant;
 import it.peruvianit.web.error.StatusCode;

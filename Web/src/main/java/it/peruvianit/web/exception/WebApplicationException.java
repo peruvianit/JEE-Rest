@@ -1,6 +1,6 @@
 package it.peruvianit.web.exception;
 
-import it.peruvianit.commos.exception.IException;
+import it.peruvianit.commons.exception.IException;
 
 public class WebApplicationException extends Exception implements IException<WebApplicationException> {
 	/**

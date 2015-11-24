@@ -3,8 +3,8 @@ package it.peruvianit.ejb;
 
 import javax.ejb.Remote;
 
-import it.peruvianit.util.token.TokenTransfer;
-import it.peruvianit.util.token.UserDetails;
+import it.peruvianit.commons.util.token.TokenTransfer;
+import it.peruvianit.commons.util.token.UserDetails;
 
 @Remote
 public interface AuthenticationRemote {

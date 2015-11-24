@@ -1,4 +1,4 @@
-package it.peruvianit.commos.util;
+package it.peruvianit.commons.util;
 
 public class StringUtils {
 	public static String message(){

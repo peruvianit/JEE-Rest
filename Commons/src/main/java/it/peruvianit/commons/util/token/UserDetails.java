@@ -1,4 +1,4 @@
-package it.peruvianit.util.token;
+package it.peruvianit.commons.util.token;
 
 public class UserDetails {
 	private String username;

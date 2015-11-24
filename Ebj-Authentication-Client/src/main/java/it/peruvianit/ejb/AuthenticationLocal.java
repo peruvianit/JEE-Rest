@@ -3,8 +3,8 @@ package it.peruvianit.ejb;
 
 import javax.ejb.Local;
 
-import it.peruvianit.util.token.TokenTransfer;
-import it.peruvianit.util.token.UserDetails;
+import it.peruvianit.commons.util.token.TokenTransfer;
+import it.peruvianit.commons.util.token.UserDetails;
 
 @Local
 public interface AuthenticationLocal {

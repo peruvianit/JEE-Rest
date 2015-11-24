@@ -1,4 +1,4 @@
-package it.peruvianit.util;
+package it.peruvianit.commons.util;
 
 import com.google.gson.GsonBuilder;
 

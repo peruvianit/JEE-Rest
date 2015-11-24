@@ -3,9 +3,9 @@ package it.peruvianit.ejb;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import it.peruvianit.util.token.TokenTransfer;
-import it.peruvianit.util.token.TokenUtils;
-import it.peruvianit.util.token.UserDetails;
+import it.peruvianit.commons.util.token.TokenTransfer;
+import it.peruvianit.commons.util.token.TokenUtils;
+import it.peruvianit.commons.util.token.UserDetails;
 
 /**
  * Session Bean implementation class Authentication

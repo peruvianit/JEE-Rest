@@ -1,4 +1,4 @@
-package it.peruvianit.util.token;
+package it.peruvianit.commons.util.token;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

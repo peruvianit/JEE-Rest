@@ -8,9 +8,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import it.peruvianit.commons.util.token.TokenTransfer;
+import it.peruvianit.commons.util.token.UserDetails;
 import it.peruvianit.ejb.AuthenticationLocal;
-import it.peruvianit.util.token.TokenTransfer;
-import it.peruvianit.util.token.UserDetails;
+
 import it.peruvianit.web.util.RequestUtil;
  
 @Path("/user")
