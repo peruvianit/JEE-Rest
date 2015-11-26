@@ -11,11 +11,11 @@ import javax.ws.rs.core.MediaType;
 import it.peruvianit.commons.util.token.TokenTransfer;
 import it.peruvianit.commons.util.token.UserDetails;
 import it.peruvianit.ejb.AuthenticationLocal;
-
+import it.peruvianit.web.resource.base.AbstractResource;
 import it.peruvianit.web.util.RequestUtil;
  
 @Path("/user")
-public class AuthenticationService {	
+public class AuthenticationService extends AbstractResource {	
 	@EJB
 	AuthenticationLocal authenticationLocal;
 	

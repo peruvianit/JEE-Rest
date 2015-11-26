@@ -1,6 +1,9 @@
 package it.peruvianit.web.bean;
 
+import java.util.UUID;
+
 public class BeanError {
+	private UUID identifier;
 	private String type;
 	private int code;
 	private String description;
@@ -9,8 +12,9 @@ public class BeanError {
 	
 	// Constructors
 	
-	public BeanError(String type, int code, String description, String message, String relative) {
+	public BeanError(UUID identifier, String type, int code, String description, String message, String relative) {
 		super();
+		this.identifier = identifier;
 		this.type = type;
 		this.code = code;
 		this.description = description;
@@ -19,6 +23,14 @@ public class BeanError {
 	}
 
 	// Getters and Setters
+	
+	public UUID getIdentifier() {
+		return identifier;
+	}
+
+	public void setIdentifier(UUID identifier) {
+		this.identifier = identifier;
+	}
 	
 	public String getType() {
 		return type;
