@@ -8,6 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import it.peruvianit.commons.annotation.resource.ServiceIdentifier;
 import it.peruvianit.commons.util.token.TokenTransfer;
 import it.peruvianit.commons.util.token.UserDetails;
 import it.peruvianit.ejb.AuthenticationLocal;
@@ -19,8 +20,9 @@ public class AuthenticationService extends AbstractResource {
 	@EJB
 	AuthenticationLocal authenticationLocal;
 	
+	@ServiceIdentifier(identifier = 1)
 	@Path("authenticate")
-	@POST
+	@POST	
 	@Produces(MediaType.APPLICATION_JSON)
 	public TokenTransfer authenticate(@Context HttpServletRequest requestContext) {	
 		UserDetails userDetails = RequestUtil.getUserDetails(requestContext);
