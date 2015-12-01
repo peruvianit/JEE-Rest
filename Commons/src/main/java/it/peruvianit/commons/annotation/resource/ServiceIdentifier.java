@@ -10,5 +10,5 @@ import static java.lang.annotation.ElementType.METHOD;
 @Retention(RUNTIME)
 public @interface ServiceIdentifier {
 	int identifier();
-	TypeAccessService typeAccessService() default TypeAccessService.PUBLIC;
+	TypeAccessService typeAccessService() default TypeAccessService.PRIVATE;
 }
