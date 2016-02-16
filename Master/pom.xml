@@ -8,9 +8,13 @@
   <description>Serve per il Build di tutta l'applicazione e condivisione delle variabili globali, Repository, ecc.</description>
   <modules>
   	<module>../Commons</module>
+  	<module>../Models</module>
+  	<module>../Data-Access</module>
   	<module>../Ebj-Authentication-Client</module>
   	<module>../Ebj-Authentication</module>
-  	<module>../Web</module>  	
+  	<module>../Ejb-Administration</module>
+  	<module>../Ejb-Administration-Client</module>
+  	<module>../Web</module>
   </modules>
   <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -39,7 +43,13 @@
 		</plugins>
   </build>
   <!-- GLOBAL DEPENDENCIES -->
-  <dependencies>		
+  <dependencies>	
+  		<dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+			<version>3.1.4.GA</version>
+			<scope>provided</scope>
+		</dependency>	
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>

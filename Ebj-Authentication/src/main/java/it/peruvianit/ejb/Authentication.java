@@ -1,6 +1,5 @@
 package it.peruvianit.ejb;
 
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import it.peruvianit.authenticator.BasicForm;
@@ -16,7 +15,6 @@ import it.peruvianit.invoke.Authenticator;
  * Session Bean implementation class Authentication
  */
 @Stateless
-@LocalBean
 public class Authentication implements AuthenticationRemote, AuthenticationLocal {
 	/**
      * Default constructor. 

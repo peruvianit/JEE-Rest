@@ -106,8 +106,6 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 		requestDto.setIpAddressLocale(httpServletRequest.getLocalAddr());
 		requestDto.setIpAddressRemote(httpServletRequest.getRemoteAddr());
 		requestDto.setMethod(httpServletRequest.getMethod());
-		requestDto.setIpAddressRemote(httpServletRequest.getRemoteAddr());
-		requestDto.setMethod(httpServletRequest.getMethod());
 		requestDto.setAgent(httpServletRequest.getHeader("user-agent"));
 		requestDto.setContentType(httpServletRequest.getHeader("content-type"));
 		requestDto.setReference(httpServletRequest.getRequestURI());
@@ -117,7 +115,7 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 		requestDto.setEndRequest(DateUtils.getCurrentTimeUTC());		
 		requestDto.setElapsedTime(requestDto.getEndRequest() - requestDto.getStartRequest());
 	}
-	
+		
 	{
 		requestDto = new RequestDto();
 		requestDto.setIdentifier(UUID.randomUUID());

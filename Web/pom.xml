@@ -29,6 +29,7 @@
 			<groupId>org.jboss.spec.javax.ws.rs</groupId>
 			<artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
 			<version>1.0.0.Final</version>
+			<scope>provided</scope>
 		</dependency>		
 		
 		<dependency>
@@ -60,16 +61,28 @@
 
 		<!-- PROJECT DEPENDENCIES -->
         <dependency>
-        	<groupId>it.peruvianit.ejb</groupId>
+        	<groupId>it.peruvianit.jee</groupId>
         	<artifactId>authentication-client</artifactId>
         	<type>ejb</type>
         	<version>${global.version}</version>
         </dependency>
         <dependency>
-        	<groupId>it.peruvianit.ejb</groupId>
+        	<groupId>it.peruvianit.jee</groupId>
         	<artifactId>authentication</artifactId>
         	<type>ejb</type>
         	<version>${global.version}</version>
         </dependency>
+        <dependency>
+        	<groupId>it.peruvianit.ejb</groupId>
+        	<artifactId>administration-client</artifactId>
+        	<type>ejb</type>
+        	<version>${global.version}</version>
+        </dependency>     
+        <dependency>
+        	<groupId>it.peruvianit.ejb</groupId>
+        	<artifactId>administration</artifactId>
+        	<type>ejb</type>
+        	<version>${global.version}</version>
+        </dependency>  
     </dependencies>
 </project>
