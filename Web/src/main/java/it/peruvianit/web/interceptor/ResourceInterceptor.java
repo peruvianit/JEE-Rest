@@ -1,5 +1,6 @@
 package it.peruvianit.web.interceptor;
 
+import java.util.Date;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -87,7 +88,8 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 			urlRelative = httpServletRequest.getRequestURL().toString();
 		}
 		
-		BeanError beanError = new BeanError(requestDto.getIdentifier(),
+		BeanError beanError = new BeanError(new Date(),
+											requestDto.getIdentifier(),											
 											typeException,
 											statusCode.getCode(),
 											statusCode.getDesc(),

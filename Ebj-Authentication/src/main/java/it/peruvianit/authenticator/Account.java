@@ -3,7 +3,7 @@ package it.peruvianit.authenticator;
 import it.peruvianit.dto.AccountDto;
 
 public class Account{
-	private AccountDto accountDto;
+	protected AccountDto accountDto;
 	
 	public Account(AccountDto accountDto) {
 		this.accountDto = accountDto;

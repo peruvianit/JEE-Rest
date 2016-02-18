@@ -8,6 +8,7 @@ import it.peruvianit.commons.util.token.TokenTransfer;
 import it.peruvianit.commons.util.token.TokenUtils;
 import it.peruvianit.commons.util.token.UserDetails;
 import it.peruvianit.dto.AccountDto;
+import it.peruvianit.exception.AuthenticationSecurityException;
 import it.peruvianit.interfaces.SecurityAuthenticator;
 import it.peruvianit.invoke.Authenticator;
 
@@ -23,7 +24,7 @@ public class Authentication implements AuthenticationRemote, AuthenticationLocal
         // TODO Auto-generated constructor stub
     }
     
-    public boolean doLogin(AccountDto accountDto){
+    public boolean doLogin(AccountDto accountDto) throws AuthenticationSecurityException{
     	SecurityAuthenticator securityAuthenticator = null;
     	
     	switch (accountDto.getTypeAccessAccount()) {

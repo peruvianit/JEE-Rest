@@ -14,6 +14,7 @@ import it.peruvianit.commons.util.token.TokenTransfer;
 import it.peruvianit.commons.util.token.UserDetails;
 import it.peruvianit.dto.AccountDto;
 import it.peruvianit.ejb.AuthenticationLocal;
+import it.peruvianit.exception.AuthenticationSecurityException;
 import it.peruvianit.web.exception.WebApplicationException;
 import it.peruvianit.web.resource.base.AbstractResource;
 import it.peruvianit.web.util.RequestUtil;
@@ -28,7 +29,7 @@ public class AuthenticationService extends AbstractResource {
 	@POST	
 	@Produces(MediaType.APPLICATION_JSON)
 	public TokenTransfer authenticate(@NotNull AccountDto accountDto,
-									  @Context HttpServletRequest requestContext) throws WebApplicationException {
+									  @Context HttpServletRequest requestContext) throws WebApplicationException, AuthenticationSecurityException {
 		if (!authenticationLocal.doLogin(accountDto)){
 			throw new WebApplicationException("Accesso denegato");
 		}

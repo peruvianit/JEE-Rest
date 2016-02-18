@@ -7,7 +7,9 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
+import it.peruvanit.dto.UserDto;
 import it.peruvanit.ejb.AdministrationLocal;
 import it.peruvanit.exception.EjbAdministrationException;
 import it.peruvian.mapper.AdministrationOutputMapper;
@@ -19,6 +21,7 @@ import it.peruvianit.data.exception.DataAccesException;
 import it.peruvianit.data.repository.RepositoryPersistenceLocal;
 import it.peruvianit.model.entity.Tbl1001Users;
 
+@Component
 @Stateless
 @LocalBean
 public class Administration implements AdministrationLocal{
@@ -48,4 +51,11 @@ public class Administration implements AdministrationLocal{
 		
 		return dataTableResponseDto;
 	}	
+	
+	public boolean authentication(UserDto userDto) throws EjbAdministrationException {
+		// DA IMPLEMENTARE
+		return true;
+		
+	}
+	
 }

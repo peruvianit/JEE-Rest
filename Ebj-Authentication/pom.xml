@@ -44,5 +44,11 @@
 			<version>${global.version}</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>it.peruvianit.jee</groupId>
+			<artifactId>administration</artifactId>
+			<version>${global.version}</version>
+		</dependency>
+		
   </dependencies>
 </project>
