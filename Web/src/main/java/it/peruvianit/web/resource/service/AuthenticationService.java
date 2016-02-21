@@ -28,9 +28,10 @@ public class AuthenticationService extends AbstractResource {
 	@Path("authenticate")
 	@POST	
 	@Produces(MediaType.APPLICATION_JSON)
-	public TokenTransfer authenticate(@NotNull AccountDto accountDto,
-									  @Context HttpServletRequest requestContext) throws WebApplicationException, AuthenticationSecurityException {
-		if (!authenticationLocal.doLogin(accountDto)){
+	public TokenTransfer authenticate(@NotNull AccountDto accountDtoRequest,
+									  @Context HttpServletRequest requestContext) throws WebApplicationException, AuthenticationSecurityException, Exception {
+		AccountDto accountDto = authenticationLocal.doLogin(accountDtoRequest);
+		if ( accountDto == null){
 			throw new WebApplicationException("Accesso denegato");
 		}
 		

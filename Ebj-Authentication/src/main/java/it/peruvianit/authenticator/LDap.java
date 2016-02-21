@@ -1,5 +1,6 @@
 package it.peruvianit.authenticator;
 
+import it.peruvanit.dto.UserDto;
 import it.peruvianit.dto.AccountDto;
 import it.peruvianit.interfaces.SecurityAuthenticator;
 
@@ -9,8 +10,8 @@ public final class LDap extends Account implements SecurityAuthenticator{
 	}
 
 	@Override
-	public boolean doAuthentication(){
+	public UserDto doAuthentication(){
 		// Implementazione Active Directory
-		return true;
+		return null;
 	}
 }

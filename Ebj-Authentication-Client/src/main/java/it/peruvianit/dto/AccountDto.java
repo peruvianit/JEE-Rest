@@ -10,6 +10,8 @@ public class AccountDto implements Serializable{
 	 */
 	private static final long serialVersionUID = 6278011650854233265L;
 	
+	private String name;
+	private String lastName;
 	private String account;
 	private String password;
 	private TypeAccessAccount typeAccessAccount;
@@ -21,6 +23,22 @@ public class AccountDto implements Serializable{
 		this.account = account;
 		this.password = password;
 		this.typeAccessAccount = typeAccessAccount;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getAccount() {

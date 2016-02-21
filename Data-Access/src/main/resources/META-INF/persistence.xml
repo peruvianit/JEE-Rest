@@ -5,8 +5,9 @@
 
 	<persistence-unit name="persistenceUnit"
 		transaction-type="JTA">
-		<jta-data-source>java:jboss/datasources/MySQLDSJNDI</jta-data-source>		
-		<class>it.peruvianit.model.entity.Tbl1001Users</class>		
+		<jta-data-source>java:jboss/datasources/MySQLDSJNDI</jta-data-source>
+		<mapping-file>META-INF/orm_authentication.xml</mapping-file>		
+		<class>it.peruvianit.model.entity.Tbl1001User</class>				
 		<properties>
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />

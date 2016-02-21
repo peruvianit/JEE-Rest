@@ -2,12 +2,14 @@ package it.peruvianit.data.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
 
+import it.peruvianit.data.constant.DataAccessConstant;
 import it.peruvianit.data.dto.PaginationContainerDto;
 import it.peruvianit.data.exception.DataAccesException;
-import it.peruvianit.model.entity.Tbl1001Users;
+import it.peruvianit.model.entity.Tbl1001User;
 import it.peruvianit.commons.dto.dataAccess.DataTableRequestDto;
 
 public class Tbl1001UsersDao extends GenericDao {
@@ -62,8 +64,11 @@ public class Tbl1001UsersDao extends GenericDao {
 		return paginationContainerDto;
 	}
 	
-	public Tbl1001Users authenticationLogin(){
-		// TODO Da implementare
-		return new Tbl1001Users();
+	public Tbl1001User authenticationLogin(String usrNam){
+		TypedQuery<Tbl1001User> query = em.createNamedQuery(DataAccessConstant.TBL100USERS_AUTHENTICATION,Tbl1001User.class);
+
+		query.setParameter("usrNam", usrNam);
+		
+		return query.getSingleResult();
 	}
 }

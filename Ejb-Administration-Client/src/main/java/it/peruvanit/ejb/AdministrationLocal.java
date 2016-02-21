@@ -11,5 +11,5 @@ import it.peruvianit.commons.dto.dataAccess.DataTableRequestDto;
 public interface AdministrationLocal {
 	
 	DataTableResponseDto getListUsers(DataTableRequestDto dataTableRequestDto) throws EjbAdministrationException,Exception;
-	boolean authentication(UserDto userDto) throws EjbAdministrationException;
+	UserDto authentication(String userName) throws EjbAdministrationException,Exception;
 }

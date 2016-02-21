@@ -19,7 +19,7 @@ import it.peruvianit.data.dao.Tbl1001UsersDao;
 import it.peruvianit.data.dto.PaginationContainerDto;
 import it.peruvianit.data.exception.DataAccesException;
 import it.peruvianit.data.repository.RepositoryPersistenceLocal;
-import it.peruvianit.model.entity.Tbl1001Users;
+import it.peruvianit.model.entity.Tbl1001User;
 
 @Component
 @Stateless
@@ -39,7 +39,7 @@ public class Administration implements AdministrationLocal{
 			PaginationContainerDto paginationContainerDto = Tbl1001UsersDao.getInstance(repositoryPersistenceLocal.getEntityManager()).getListUsers(dataTableRequestDto);
 			
 			dataTableResponseDto.setsEcho(dataTableRequestDto.getsEcho());
-			dataTableResponseDto.setAaData(AdministrationOutputMapper.Tbl1001UsersToUserDto((List<Tbl1001Users>)paginationContainerDto.getAaData()));			
+			dataTableResponseDto.setAaData(AdministrationOutputMapper.Tbl1001UsersToUserDto((List<Tbl1001User>)paginationContainerDto.getAaData()));			
 			dataTableResponseDto.setiTotalRecords(paginationContainerDto.getiTotalRecords());
 			dataTableResponseDto.setiTotalDisplayRecords(dataTableResponseDto.getiTotalRecords());
 		} catch (DataAccesException daEx) {
@@ -52,10 +52,20 @@ public class Administration implements AdministrationLocal{
 		return dataTableResponseDto;
 	}	
 	
-	public boolean authentication(UserDto userDto) throws EjbAdministrationException {
-		// DA IMPLEMENTARE
-		return true;
+	public UserDto authentication(String userName) throws EjbAdministrationException,Exception {
+		UserDto userDto = null;
+		Tbl1001User tbl1001User = Tbl1001UsersDao.getInstance(repositoryPersistenceLocal.getEntityManager()).authenticationLogin(userName);
 		
+		if (tbl1001User!=null)
+		{
+			userDto = new UserDto();
+			userDto.setName(tbl1001User.getNomUsr());
+			userDto.setLastName(tbl1001User.getCogUsr());
+			userDto.setUsername(tbl1001User.getUsrNam());
+			userDto.setPassword(tbl1001User.getPassUsr());
+		}
+		
+		return userDto;
 	}
 	
 }

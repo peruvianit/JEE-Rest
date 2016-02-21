@@ -18,8 +18,8 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@Table(name = "TBL1001_USERS")
-public class Tbl1001Users implements Serializable {
+@Table(name = "TBL1001_USER")
+public class Tbl1001User implements Serializable {
 	private static final long serialVersionUID = -1447613997013720449L;
 	
 	@Id
@@ -72,7 +72,7 @@ public class Tbl1001Users implements Serializable {
 		datOraUltMod = new Date();
 	}
 
-	public Tbl1001Users() {
+	public Tbl1001User() {
 	}
 
 	public BigDecimal getPrgIdeUsr() {
@@ -207,7 +207,7 @@ public class Tbl1001Users implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Tbl1001Users other = (Tbl1001Users) obj;
+		Tbl1001User other = (Tbl1001User) obj;
 		if (codUsrUltMod == null) {
 			if (other.codUsrUltMod != null)
 				return false;

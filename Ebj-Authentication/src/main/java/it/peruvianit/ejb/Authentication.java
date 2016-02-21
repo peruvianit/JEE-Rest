@@ -2,6 +2,7 @@ package it.peruvianit.ejb;
 
 import javax.ejb.Stateless;
 
+import it.peruvanit.dto.UserDto;
 import it.peruvianit.authenticator.BasicForm;
 import it.peruvianit.authenticator.LDap;
 import it.peruvianit.commons.util.token.TokenTransfer;
@@ -24,7 +25,8 @@ public class Authentication implements AuthenticationRemote, AuthenticationLocal
         // TODO Auto-generated constructor stub
     }
     
-    public boolean doLogin(AccountDto accountDto) throws AuthenticationSecurityException{
+    public AccountDto doLogin(AccountDto accountDto) throws AuthenticationSecurityException, Exception{
+    	AccountDto accountDtoResponse = null;
     	SecurityAuthenticator securityAuthenticator = null;
     	
     	switch (accountDto.getTypeAccessAccount()) {
@@ -38,7 +40,16 @@ public class Authentication implements AuthenticationRemote, AuthenticationLocal
 				break;
 		}
     	
-    	return Authenticator.doLogin(securityAuthenticator);
+    	UserDto userDto = Authenticator.doLogin(securityAuthenticator);
+    	
+    	if (userDto != null){
+    		accountDtoResponse = new AccountDto();
+    		accountDtoResponse.setName(userDto.getName());
+    		accountDtoResponse.setLastName(userDto.getLastName());
+    		accountDtoResponse.setAccount(userDto.getUsername());
+    	}
+    	
+    	return accountDtoResponse;
     }
     
     public TokenTransfer generateToken(UserDetails userDetails){    	

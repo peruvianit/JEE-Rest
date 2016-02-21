@@ -10,7 +10,7 @@ import it.peruvianit.exception.AuthenticationSecurityException;
 
 @Remote
 public interface AuthenticationRemote {
-	boolean doLogin(AccountDto accountDto) throws AuthenticationSecurityException;
+	AccountDto doLogin(AccountDto accountDto) throws AuthenticationSecurityException, Exception;
 	TokenTransfer generateToken(UserDetails userDetails);
 	String infoEJB();
 }
