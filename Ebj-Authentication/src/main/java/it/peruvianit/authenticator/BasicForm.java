@@ -3,6 +3,8 @@ package it.peruvianit.authenticator;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.jasypt.exceptions.EncryptionOperationNotPossibleException;
+
 import it.peruvanit.dto.UserDto;
 import it.peruvanit.ejb.AdministrationLocal;
 import it.peruvanit.exception.EjbAdministrationException;
@@ -20,12 +22,13 @@ public final class BasicForm extends Account implements SecurityAuthenticator{
 	}
 	
 	@Override
-	public UserDto doAuthentication() throws AuthenticationSecurityException, Exception{		
+	public UserDto doAuthentication() throws AuthenticationSecurityException, Exception{
+		UserDto userDto = null;
 		try {
 			EncryptorAdapter encryptorAdapter = new EncryptorAdapter();
 			AdministrationLocal administrationLocal = (AdministrationLocal) InitialContext.doLookup(AuthenticationConstant.ADMINISTRATION_LOCAL_EJB_JNDI);
 				
-			UserDto userDto = administrationLocal.authentication(accountDto.getAccount());
+			userDto = administrationLocal.authentication(accountDto.getAccount());
 			
 			if (userDto != null){
 				if (!encryptorAdapter.decrypt(accountDto.getPassword(), userDto.getPassword())){
@@ -37,6 +40,8 @@ public final class BasicForm extends Account implements SecurityAuthenticator{
 			
 		} catch (NamingException | EjbAdministrationException e) {
 			throw new AuthenticationSecurityException(e.getMessage());
+		}catch (EncryptionOperationNotPossibleException eosEx){
+			throw new AuthenticationSecurityException("Problem with the parameters for the Encryption : {username : \"" + userDto.getUsername() + "\"}");
 		}
 	}
 }
