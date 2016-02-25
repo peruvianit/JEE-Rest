@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -54,15 +55,18 @@ public class Administration implements AdministrationLocal{
 	
 	public UserDto authentication(String userName) throws EjbAdministrationException,Exception {
 		UserDto userDto = null;
-		Tbl1001User tbl1001User = Tbl1001UsersDao.getInstance(repositoryPersistenceLocal.getEntityManager()).authenticationLogin(userName);
-		
-		if (tbl1001User!=null)
-		{
-			userDto = new UserDto();
-			userDto.setName(tbl1001User.getNomUsr());
-			userDto.setLastName(tbl1001User.getCogUsr());
-			userDto.setUsername(tbl1001User.getUsrNam());
-			userDto.setPassword(tbl1001User.getPassUsr());
+		try{
+			Tbl1001User tbl1001User = Tbl1001UsersDao.getInstance(repositoryPersistenceLocal.getEntityManager()).authenticationLogin(userName);
+			if (tbl1001User!=null)
+			{
+				userDto = new UserDto();
+				userDto.setName(tbl1001User.getNomUsr());
+				userDto.setLastName(tbl1001User.getCogUsr());
+				userDto.setUsername(tbl1001User.getUsrNam());
+				userDto.setPassword(tbl1001User.getPassUsr());
+			}
+		}catch(NoResultException nRex){
+			throw new EjbAdministrationException("Utente non trovato : {username : '" + userName + "'}");
 		}
 		
 		return userDto;

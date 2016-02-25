@@ -84,5 +84,10 @@
         	<type>ejb</type>
         	<version>${global.version}</version>
         </dependency>  
+        <dependency>
+		   <groupId>eu.bitwalker</groupId>
+		   <artifactId>UserAgentUtils</artifactId>
+		   <version>1.19</version>
+		</dependency>
     </dependencies>
 </project>
