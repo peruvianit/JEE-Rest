@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import it.peruvanit.dto.UserDto;
 import it.peruvanit.ejb.AdministrationLocal;
 import it.peruvanit.exception.EjbAdministrationException;
+import it.peruvanit.exception.RecordNotFoundException;
 import it.peruvian.mapper.AdministrationOutputMapper;
 import it.peruvianit.commons.dto.dataAccess.DataTableRequestDto;
 import it.peruvianit.commons.dto.dataAccess.DataTableResponseDto;
@@ -25,8 +26,8 @@ import it.peruvianit.model.entity.Tbl1001User;
 @Component
 @Stateless
 @LocalBean
-public class Administration implements AdministrationLocal{
-	Logger logger = Logger.getLogger(Tbl1001UsersDao.class);
+public class AdministrationBean implements AdministrationLocal{
+	Logger logger = Logger.getLogger(AdministrationBean.class);
 	
 	@EJB
 	RepositoryPersistenceLocal repositoryPersistenceLocal;
@@ -66,7 +67,7 @@ public class Administration implements AdministrationLocal{
 				userDto.setPassword(tbl1001User.getPassUsr());
 			}
 		}catch(NoResultException nRex){
-			throw new EjbAdministrationException("Utente non trovato : {username : '" + userName + "'}");
+			throw new RecordNotFoundException("Utente non trovato : {username : '" + userName + "'}");
 		}
 		
 		return userDto;

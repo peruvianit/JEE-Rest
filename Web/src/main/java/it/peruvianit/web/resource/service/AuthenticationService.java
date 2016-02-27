@@ -9,12 +9,18 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import it.peruvanit.exception.RecordNotFoundException;
 import it.peruvianit.commons.annotation.resource.ServiceIdentifier;
 import it.peruvianit.commons.util.token.TokenTransfer;
 import it.peruvianit.commons.util.token.UserDetails;
+import it.peruvianit.data.repository.RepositoryPersistenceLocal;
 import it.peruvianit.dto.AccountDto;
+import it.peruvianit.dto.LoginAccessDto;
 import it.peruvianit.ejb.AuthenticationLocal;
 import it.peruvianit.exception.AuthenticationSecurityException;
+import it.peruvianit.exception.IncorrectCredentialsException;
+import it.peruvianit.exception.SaveLoginAccessException;
+import it.peruvianit.web.constant.WebConstant;
 import it.peruvianit.web.exception.WebApplicationException;
 import it.peruvianit.web.resource.base.AbstractResource;
 import it.peruvianit.web.util.RequestUtil;
@@ -24,19 +30,51 @@ public class AuthenticationService extends AbstractResource {
 	@EJB
 	AuthenticationLocal authenticationLocal;
 	
+	@EJB
+	RepositoryPersistenceLocal repositoryPersistenceLocal;
+	
 	@ServiceIdentifier(identifier = 1)
 	@Path("authenticate")
 	@POST	
 	@Produces(MediaType.APPLICATION_JSON)
+	
 	public TokenTransfer authenticate(@NotNull AccountDto accountDtoRequest,
 									  @Context HttpServletRequest requestContext) throws WebApplicationException, AuthenticationSecurityException, Exception {
-		AccountDto accountDto = authenticationLocal.doLogin(accountDtoRequest);
-		if ( accountDto == null){
-			throw new WebApplicationException("Accesso denegato");
+		LoginAccessDto loginAccessDto = new LoginAccessDto();
+		UserDetails userDetails = null;
+		TokenTransfer tokenTransfer = null;
+		
+		try{
+			userDetails = RequestUtil.getUserDetails(requestContext);			
+			userDetails.setUsername(accountDtoRequest.getAccount());
+			
+			AccountDto accountDto = authenticationLocal.doLogin(accountDtoRequest);
+			if ( accountDto == null){
+				throw new WebApplicationException("Accesso denegato");
+			}
+			
+			tokenTransfer = authenticationLocal.generateToken(userDetails);	
+			
+			loginAccessDto.setAccessStatus(WebConstant.LOGIN_ACCESS_STATUS_SUCCESS);
+			
+			if (tokenTransfer != null){
+				loginAccessDto.setToken(tokenTransfer.getToken());
+			}			
+		}catch(IncorrectCredentialsException | RecordNotFoundException iEx){
+			loginAccessDto.setAccessStatus(WebConstant.LOGIN_ACCESS_STATUS_INCORRECT_CREDENTIAL);
+			throw iEx;
+		}
+		finally {
+			try{
+				loginAccessDto.setUserDetails(userDetails);
+				loginAccessDto.setTypeAccess(accountDtoRequest.getTypeAccessAccount().toString());
+				
+				authenticationLocal.saveLoginAccess(loginAccessDto);			
+			}catch(Exception ex){			
+				throw new SaveLoginAccessException(ex.getMessage());
+			}			
 		}
 		
-		UserDetails userDetails = RequestUtil.getUserDetails(requestContext);
-		
-		return authenticationLocal.generateToken(userDetails);
+		return tokenTransfer;
 	}
 }

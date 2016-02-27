@@ -13,4 +13,9 @@ public class GenericDao {
 		super();
 		this.em = em;
 	}
+	
+	public <T extends Object> T save(final T entity) {
+		em.persist(entity);
+		return entity;
+	}
 }
