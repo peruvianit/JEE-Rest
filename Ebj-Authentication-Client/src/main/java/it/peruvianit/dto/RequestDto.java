@@ -1,4 +1,4 @@
-package it.peruvianit.web.dto;
+package it.peruvianit.dto;
 
 import java.io.Serializable;
 import java.util.UUID;

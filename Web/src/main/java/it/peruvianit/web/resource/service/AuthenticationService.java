@@ -33,11 +33,10 @@ public class AuthenticationService extends AbstractResource {
 	@EJB
 	RepositoryPersistenceLocal repositoryPersistenceLocal;
 	
-	@ServiceIdentifier(identifier = 1)
+	@ServiceIdentifier(identifier = 100)
 	@Path("authenticate")
 	@POST	
-	@Produces(MediaType.APPLICATION_JSON)
-	
+	@Produces(MediaType.APPLICATION_JSON)	
 	public TokenTransfer authenticate(@NotNull AccountDto accountDtoRequest,
 									  @Context HttpServletRequest requestContext) throws WebApplicationException, AuthenticationSecurityException, Exception {
 		LoginAccessDto loginAccessDto = new LoginAccessDto();

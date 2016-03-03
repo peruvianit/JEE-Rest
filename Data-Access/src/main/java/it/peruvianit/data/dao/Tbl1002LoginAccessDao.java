@@ -4,6 +4,8 @@ import javax.persistence.EntityManager;
 
 import org.apache.log4j.Logger;
 
+import it.peruvianit.data.exception.DataAccesException;
+
 public class Tbl1002LoginAccessDao extends GenericDao {
 	Logger logger = Logger.getLogger(Tbl1002LoginAccessDao.class);
 	
@@ -11,9 +13,9 @@ public class Tbl1002LoginAccessDao extends GenericDao {
 		super(em);		
 	}
 	
-	public static Tbl1002LoginAccessDao getInstance(final EntityManager em) throws Exception {
+	public static Tbl1002LoginAccessDao getInstance(final EntityManager em) throws DataAccesException {
 		if (em == null) {
-			throw new Exception("Repository configuration not found!");
+			throw new DataAccesException("Repository configuration not found!");
 		}
 		return new Tbl1002LoginAccessDao(em);
 	}

@@ -1,11 +1,14 @@
 package it.peruvianit.web.interceptor;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -24,10 +27,13 @@ import org.jboss.resteasy.spi.interception.PreProcessInterceptor;
 import it.peruvianit.commons.exception.IException;
 import it.peruvianit.commons.util.DateUtils;
 import it.peruvianit.commons.util.GsonUtils;
+import it.peruvianit.dto.RequestDto;
+import it.peruvianit.ejb.AuthenticationLocal;
+import it.peruvianit.exception.AuthenticationSecurityException;
 import it.peruvianit.web.bean.BeanError;
 import it.peruvianit.web.constant.WebConstant;
-import it.peruvianit.web.dto.RequestDto;
 import it.peruvianit.web.error.StatusCode;
+import it.peruvianit.web.util.SecurityUtil;
 
 @Provider
 @ServerInterceptor
@@ -37,26 +43,61 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 	@Context
 	private HttpServletRequest httpServletRequest;
 	
+	@EJB
+	AuthenticationLocal authenticationLocal;
+	
 	RequestDto requestDto;
 	
 	@Override
 	public ServerResponse preProcess(HttpRequest httpRequest, ResourceMethod resourceMethod)
 			throws Failure, WebApplicationException {
-		requestDto.setStartRequest(DateUtils.getCurrentTimeUTC());
-		fillRequestDto();
-		return null;
+		
+		ServerResponse response = null;
+		BeanError beanError = null;
+		
+		final String requestUrl = httpRequest.getUri().getAbsolutePath().toString();
+		
+		this.startRequest();
+		this.fillRequestDto();
+		
+		final boolean isSecured = SecurityUtil.isMethodSecure(resourceMethod);
+		
+		if (isSecured) {
+			this.logger.debug("Request, richiesta Authenticazione");
+			
+			String publicApiKey = this.getUserDefinedHeader(httpRequest, WebConstant.PUBLIC_KEY_HEADER);
+			String requestSignature = this.getUserDefinedHeader(httpRequest, WebConstant.SIGNATURE_HEADER);
+			
+			if (publicApiKey != null && requestSignature != null) {
+				this.logger.debug("REST Request Headers sono valite");
+				
+			}else{
+				beanError = createBeanError(WebConstant.TYPE_EXCEPTION_APPLICATION,
+											StatusCode.BAD_REQUEST,
+											"Headers, publicApiKey e/o requestSignature mancanti",
+											requestUrl);
+			}
+			
+			if (beanError != null){
+				response = this.buildResponse(StatusCode.BAD_REQUEST.getCode(),GsonUtils.objToJson(beanError));
+			}				
+		}
+		
+		return response;
 	}
 
 	@Override
-	public void postProcess(ServerResponse response) {
-		this.endResponse();
-		
+	public void postProcess(ServerResponse response) {		
 		requestDto.setResponseCode(response.getStatus());
 		Object object = response.getEntity();
 		
 		if (object != null){
 			requestDto.setPayloadLength(object.toString().length());
 		}
+		
+		this.endResponse();
+		
+		saveRequest();
 	}
 	
 	@Override
@@ -64,6 +105,8 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 		String typeException = null;
 		StatusCode statusCode = null;
 		String urlRelative = null;
+		
+		this.startRequest();
 		
 		if (throwable instanceof NotFoundException) {
 			statusCode = StatusCode.NOT_FOUND;			
@@ -88,16 +131,18 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 			urlRelative = httpServletRequest.getRequestURL().toString();
 		}
 		
-		BeanError beanError = new BeanError(new Date(),
-											requestDto.getIdentifier(),											
-											typeException,
-											statusCode.getCode(),
-											statusCode.getDesc(),
-											throwable.getMessage(),
-											urlRelative);
+		BeanError beanError = createBeanError(typeException,
+											  statusCode,
+											  throwable.getMessage(),
+											  urlRelative);
+		
 		logger.error(throwable.getMessage());
 		
+		this.fillRequestDto();
+		this.endResponse();
 		requestDto.setResponseCode(statusCode.getCode());
+		
+		saveRequest();
 		
 		return Response.status(statusCode.getCode()).entity(GsonUtils.objToJson(beanError)).build();		
 	}
@@ -113,13 +158,55 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 		requestDto.setReference(httpServletRequest.getRequestURI());
 	}
 
+	private void startRequest(){
+		requestDto.setIdentifier(UUID.randomUUID());
+		requestDto.setStartRequest(DateUtils.getCurrentTimeUTC());
+	}
+	
 	private void endResponse(){		
 		requestDto.setEndRequest(DateUtils.getCurrentTimeUTC());		
 		requestDto.setElapsedTime(requestDto.getEndRequest() - requestDto.getStartRequest());
 	}
+	
+	private String getUserDefinedHeader(final HttpRequest httpRequest, final String headerName) {
+        String headerValue = null;
+        final HttpHeaders headers = httpRequest.getHttpHeaders();
+
+        final List<String> headerList = headers.getRequestHeader(headerName);
+        if (headerList != null && !headerList.isEmpty()) {
+            headerValue = headerList.get(0);
+        }
+
+        return headerValue;
+    }
+	
+	private void saveRequest(){
+		try {
+			authenticationLocal.saveRequest(requestDto);
+		} catch (AuthenticationSecurityException aEx) {
+			logger.error(aEx.getMessage());
+		}
+	}
+	
+	private BeanError createBeanError(String typeException,StatusCode statusCode,String messageError, String urlRelative){
+		return new BeanError(new Date(),
+							 requestDto.getIdentifier(),											
+							 typeException,
+							 statusCode.getCode(),
+							 statusCode.getDesc(),
+							 messageError,
+							 urlRelative);
+	}
+	
+	private ServerResponse buildResponse(final int statusCode, final String message) {
+        this.logger.info("Creazione REST Response: " + statusCode + " - " + message);
+        final ServerResponse response = new ServerResponse();
+        response.setStatus(statusCode);
+        response.setEntity(message);
+        return response;
+    }  
 		
 	{
-		requestDto = new RequestDto();
-		requestDto.setIdentifier(UUID.randomUUID());
+		requestDto = new RequestDto();		
 	}
 }
