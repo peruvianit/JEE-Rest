@@ -16,4 +16,5 @@ public interface AuthenticationLocal {
 	TokenTransfer generateToken(UserDetails userDetails);
 	void saveLoginAccess(LoginAccessDto loginAccessDto) throws AuthenticationSecurityException;
 	void saveRequest(RequestDto requestDto) throws AuthenticationSecurityException;
+	AccountDto findByRequestSignature(String requestSignature) throws AuthenticationSecurityException;
 }

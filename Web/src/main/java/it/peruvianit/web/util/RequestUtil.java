@@ -1,8 +1,15 @@
 package it.peruvianit.web.util;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import eu.bitwalker.useragentutils.UserAgent;
+import it.peruvianit.commons.util.GsonUtils;
 import it.peruvianit.commons.util.token.UserDetails;
 
 public class RequestUtil {
@@ -34,5 +41,39 @@ public class RequestUtil {
 		userDetails.setManufacter(manufacter);
 		
 		return userDetails;
+	}
+	
+	public static String captureParamsRequest(HttpServletRequest requestContext){
+		@SuppressWarnings("unchecked")
+		Enumeration<String> parameterNames = (requestContext.getParameterNames());
+		
+		Map<String,Object> mapParams = new HashMap<String,Object>();
+		
+		String returnValue = "";
+		
+		while(parameterNames.hasMoreElements()){
+			String paramNames = parameterNames.nextElement();
+			String[] paramValues = requestContext.getParameterValues(paramNames);
+			
+			Object value = null;
+			if (paramValues.length > 2){
+				List<String> listValues = new ArrayList<>();
+							
+				for (int i=0; i < paramValues.length; i++){
+					String paramValue = paramValues[i];
+					listValues.add(paramValue);
+				}
+				value = listValues;
+			}else{
+				value = paramValues[0];				
+			}
+			
+			mapParams.put(paramNames, value);			
+		}
+		
+		if (mapParams.size()>0){
+			returnValue = GsonUtils.objToJson(mapParams);
+		}
+		return returnValue;
 	}
 }

@@ -3,6 +3,7 @@ package it.peruvianit.web.error;
 public enum StatusCode {
 	// Errori Api Estandar
 	BAD_REQUEST(400, "The request cannot be fulfilled due to bad syntax"),
+	AUTHORIZATION_REQUIRED(401, "Authorization Required"),
 	NOT_FOUND(404, "Could not find resource"),
 	
 	// Errori Applicativi

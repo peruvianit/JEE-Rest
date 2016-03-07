@@ -22,12 +22,17 @@ public class RequestDto implements Serializable {
 	private String reference;
 	
 	// Info Response
+	private String paramsQuery;
 	private Integer payloadLength;
 	private Long endRequest;
 	private Integer responseCode;
 	
 	// Summary Metrics	
 	private Long elapsedTime;
+	
+	// Token
+	
+	private String requestSignature;
 	
 	public RequestDto() {}
 	
@@ -96,6 +101,14 @@ public class RequestDto implements Serializable {
 		this.reference = reference;
 	}
 
+	public String getParamsQuery() {
+		return paramsQuery;
+	}
+
+	public void setParamsQuery(String paramsQuery) {
+		this.paramsQuery = paramsQuery;
+	}
+
 	public Integer getPayloadLength() {
 		return payloadLength;
 	}
@@ -128,6 +141,14 @@ public class RequestDto implements Serializable {
 		this.elapsedTime = elapsedTime;
 	}
 	
+	public String getRequestSignature() {
+		return requestSignature;
+	}
+
+	public void setRequestSignature(String requestSignature) {
+		this.requestSignature = requestSignature;
+	}
+
 	{
 		startRequest = 0L;
 		endRequest = 0L;

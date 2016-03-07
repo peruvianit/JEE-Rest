@@ -54,8 +54,8 @@ public class Tbl1003Request implements Serializable {
 	@Column(name = "VERB_API_REST", length = 3)
 	private String verbApiRest;
 	
-	@Column(name = "PAYLOAD_BODY", length = 4000)
-	private String payloadBody;
+	@Column(name = "PARAMS_QUERY", length = 4000)
+	private String paramsQuery;
 	
 	@Column(name = "AGENT_BROWSER", length = 100)
 	private String agentBrowser;
@@ -154,12 +154,12 @@ public class Tbl1003Request implements Serializable {
 		this.verbApiRest = verbApiRest;
 	}
 
-	public String getPayloadBody() {
-		return payloadBody;
+	public String getParamsQuery() {
+		return paramsQuery;
 	}
 
-	public void setPayloadBody(String payloadBody) {
-		this.payloadBody = payloadBody;
+	public void setParamsQuery(String paramsQuery) {
+		this.paramsQuery = paramsQuery;
 	}
 
 	public String getAgentBrowser() {
@@ -196,7 +196,7 @@ public class Tbl1003Request implements Serializable {
 		result = prime * result + ((identifierRequest == null) ? 0 : identifierRequest.hashCode());
 		result = prime * result + ((ipAddressLocal == null) ? 0 : ipAddressLocal.hashCode());
 		result = prime * result + ((ipAddressRemote == null) ? 0 : ipAddressRemote.hashCode());
-		result = prime * result + ((payloadBody == null) ? 0 : payloadBody.hashCode());
+		result = prime * result + ((paramsQuery == null) ? 0 : paramsQuery.hashCode());
 		result = prime * result + ((prgIdeRequest == null) ? 0 : prgIdeRequest.hashCode());
 		result = prime * result + ((requestTime == null) ? 0 : requestTime.hashCode());
 		result = prime * result + ((responseCode == null) ? 0 : responseCode.hashCode());
@@ -247,10 +247,10 @@ public class Tbl1003Request implements Serializable {
 				return false;
 		} else if (!ipAddressRemote.equals(other.ipAddressRemote))
 			return false;
-		if (payloadBody == null) {
-			if (other.payloadBody != null)
+		if (paramsQuery == null) {
+			if (other.paramsQuery != null)
 				return false;
-		} else if (!payloadBody.equals(other.payloadBody))
+		} else if (!paramsQuery.equals(other.paramsQuery))
 			return false;
 		if (prgIdeRequest == null) {
 			if (other.prgIdeRequest != null)

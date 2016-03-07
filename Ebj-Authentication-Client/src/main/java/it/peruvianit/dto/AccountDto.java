@@ -1,6 +1,7 @@
 package it.peruvianit.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import it.peruvianit.enums.TypeAccessAccount;
 
@@ -15,6 +16,7 @@ public class AccountDto implements Serializable{
 	private String account;
 	private String password;
 	private TypeAccessAccount typeAccessAccount;
+	private Date expirationDate;
 	
 	public AccountDto() {}
 
@@ -63,5 +65,13 @@ public class AccountDto implements Serializable{
 
 	public void setTypeAccessAccount(TypeAccessAccount typeAccessAccount) {
 		this.typeAccessAccount = typeAccessAccount;
+	}
+
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
 	}
 }

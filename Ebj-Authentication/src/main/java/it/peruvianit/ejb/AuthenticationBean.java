@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import it.peruvanit.dto.UserDto;
 import it.peruvianit.authenticator.BasicForm;
 import it.peruvianit.authenticator.LDap;
+import it.peruvianit.commons.util.DateUtils;
 import it.peruvianit.commons.util.token.TokenTransfer;
 import it.peruvianit.commons.util.token.TokenUtils;
 import it.peruvianit.commons.util.token.UserDetails;
@@ -31,8 +32,7 @@ public class AuthenticationBean implements AuthenticationRemote, AuthenticationL
 	@EJB
 	RepositoryPersistenceLocal repositoryPersistenceLocal;
 	
-    public AuthenticationBean() {
-        // TODO Auto-generated constructor stub
+    public AuthenticationBean() {    	
     }
     
     public AccountDto doLogin(AccountDto accountDto) throws AuthenticationSecurityException, Exception{
@@ -91,7 +91,7 @@ public class AuthenticationBean implements AuthenticationRemote, AuthenticationL
 		
 		tbl1003Request.setIdentifierRequest(requestDto.getIdentifier().toString());
 		tbl1003Request.setUserName("--MANCANTE--");
-		tbl1003Request.setToken("--MANCANTE--");
+		tbl1003Request.setToken(requestDto.getRequestSignature());
 		tbl1003Request.setIpAddressLocal(requestDto.getIpAddressLocale());
 		tbl1003Request.setIpAddressRemote(requestDto.getIpAddressRemote());
 		tbl1003Request.setRequestTime(requestDto.getStartRequest());
@@ -99,7 +99,7 @@ public class AuthenticationBean implements AuthenticationRemote, AuthenticationL
 		tbl1003Request.setElapsedTime(requestDto.getElapsedTime());
 		tbl1003Request.setUriApiRest(requestDto.getReference());
 		tbl1003Request.setVerbApiRest(requestDto.getMethod());
-		tbl1003Request.setPayloadBody("--MANCANTE--");
+		tbl1003Request.setParamsQuery(requestDto.getParamsQuery());
 		tbl1003Request.setAgentBrowser(requestDto.getAgent());
 		tbl1003Request.setContentType(requestDto.getContentType());		
 		tbl1003Request.setResponseCode(requestDto.getResponseCode());
@@ -110,5 +110,23 @@ public class AuthenticationBean implements AuthenticationRemote, AuthenticationL
 			throw new AuthenticationSecurityException(e.getMessage());
 		}
 		
+	}
+
+	@Override
+	public AccountDto findByRequestSignature(String requestSignature) throws AuthenticationSecurityException {
+		AccountDto accountDto = null;
+		try {
+			Tbl1002LoginAccess tbl1002LoginAccess = Tbl1002LoginAccessDao.getInstance(repositoryPersistenceLocal.getEntityManager()).findByRequestSignature(requestSignature);
+			
+			if(tbl1002LoginAccess != null){
+				accountDto = new AccountDto();
+				
+				accountDto.setAccount(tbl1002LoginAccess.getUserName());
+				accountDto.setExpirationDate(DateUtils.addSeconds(tbl1002LoginAccess.getLoginTime(),21600)); // TODO Da implementare tabella, Parametri Sistema 21600 = 6 Ore, 			
+			}			
+		} catch (Exception e) {
+			throw new AuthenticationSecurityException(e.getMessage());
+		}
+		return accountDto;
 	}	
 }

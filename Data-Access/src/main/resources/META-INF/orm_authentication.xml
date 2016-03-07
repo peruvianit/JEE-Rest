@@ -10,4 +10,13 @@
 			]]>
 		</query>
 	</named-query>
+	
+	<named-query name="Tbl1002Login_Access.findByRequestSignature">
+		<query><![CDATA[
+			SELECT l 
+			  FROM Tbl1002LoginAccess l 
+			 WHERE l.token = :requestSignature
+			]]>
+		</query>
+	</named-query>	
 </entity-mappings>

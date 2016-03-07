@@ -27,12 +27,14 @@ import org.jboss.resteasy.spi.interception.PreProcessInterceptor;
 import it.peruvianit.commons.exception.IException;
 import it.peruvianit.commons.util.DateUtils;
 import it.peruvianit.commons.util.GsonUtils;
+import it.peruvianit.dto.AccountDto;
 import it.peruvianit.dto.RequestDto;
 import it.peruvianit.ejb.AuthenticationLocal;
 import it.peruvianit.exception.AuthenticationSecurityException;
 import it.peruvianit.web.bean.BeanError;
 import it.peruvianit.web.constant.WebConstant;
 import it.peruvianit.web.error.StatusCode;
+import it.peruvianit.web.util.RequestUtil;
 import it.peruvianit.web.util.SecurityUtil;
 
 @Provider
@@ -57,8 +59,10 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 		
 		final String requestUrl = httpRequest.getUri().getAbsolutePath().toString();
 		
-		this.startRequest();
+		this.startRequest();		
 		this.fillRequestDto();
+		
+		requestDto.setParamsQuery(RequestUtil.captureParamsRequest(httpServletRequest));
 		
 		final boolean isSecured = SecurityUtil.isMethodSecure(resourceMethod);
 		
@@ -68,8 +72,31 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 			String publicApiKey = this.getUserDefinedHeader(httpRequest, WebConstant.PUBLIC_KEY_HEADER);
 			String requestSignature = this.getUserDefinedHeader(httpRequest, WebConstant.SIGNATURE_HEADER);
 			
+			requestDto.setRequestSignature(requestSignature);
+			
 			if (publicApiKey != null && requestSignature != null) {
 				this.logger.debug("REST Request Headers sono valite");
+				
+				AccountDto accountDto = null;
+				try {
+					accountDto = authenticationLocal.findByRequestSignature(requestSignature);
+				} catch (AuthenticationSecurityException e) {
+					beanError = createBeanError(WebConstant.TYPE_EXCEPTION_APPLICATION,
+												StatusCode.GENERIC_ERROR,
+												"authenticationLocal.findByRequestSignature : {requestSignature :" + requestSignature + "}",
+												requestUrl);
+				}
+				
+				final Date expirationDate = accountDto.getExpirationDate();
+				
+				if (expirationDate != null && System.currentTimeMillis() < expirationDate.getTime()){
+					this.logger.debug("Request Signature Not Expired");					
+				}else{
+					beanError = createBeanError(WebConstant.TYPE_EXCEPTION_APPLICATION,
+												StatusCode.AUTHORIZATION_REQUIRED,
+												"Invalid Request Signature : {requestSignature :" + requestSignature + "}",
+												requestUrl);
+				}
 				
 			}else{
 				beanError = createBeanError(WebConstant.TYPE_EXCEPTION_APPLICATION,
@@ -162,7 +189,7 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 		requestDto.setIdentifier(UUID.randomUUID());
 		requestDto.setStartRequest(DateUtils.getCurrentTimeUTC());
 	}
-	
+
 	private void endResponse(){		
 		requestDto.setEndRequest(DateUtils.getCurrentTimeUTC());		
 		requestDto.setElapsedTime(requestDto.getEndRequest() - requestDto.getStartRequest());
