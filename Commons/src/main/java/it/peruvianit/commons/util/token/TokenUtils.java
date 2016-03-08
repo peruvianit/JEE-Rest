@@ -1,41 +1,47 @@
 package it.peruvianit.commons.util.token;
 
-import java.security.MessageDigest;
+import java.io.IOException;
+import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.UUID;
+import java.security.SignatureException;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.springframework.security.crypto.codec.Hex;
+import com.auth0.jwt.JWTSigner;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.JWTVerifyException;
+
+import it.peruvianit.commons.exception.CommonsException;
+import it.peruvianit.commons.util.DateUtils;
 
 public class TokenUtils {
-	public static final String MAGIC_KEY = "obfuscate";
-
-
-	public static String createToken(UserDetails userDetails)
-	{
-		StringBuilder tokenBuilder = new StringBuilder();		
-		tokenBuilder.append(TokenUtils.computeSignature(userDetails));
-
-		return tokenBuilder.toString();
+	public static String createTokenJWT(UserDetails userDetails, byte[] secret, int expirationSeconds)
+	{ 	
+		JWTSigner signer = new JWTSigner(secret);
+		
+		HashMap<String, Object> claims = new HashMap<String, Object>();
+		// claims.put("iss", ""); PUBLIC API KEY - DA IMPLEMENTARE
+		claims.put("sub", userDetails.getUsername());
+		claims.put("iat", DateUtils.getCurrentTimeUTC());
+		claims.put("exp", DateUtils.getCurrentTimeUTC() + expirationSeconds);
+		claims.put("aud", userDetails.getIpAddress());
+		
+		return signer.sign(claims);		
 	}
-
-	public static String computeSignature(UserDetails userDetails)	
-	{	
-		StringBuilder signatureBuilder = new StringBuilder();
-		signatureBuilder.append(userDetails.getUsername());		
-		signatureBuilder.append(":");		
-		signatureBuilder.append(userDetails.getIpAddress());
-		signatureBuilder.append(":");
-		signatureBuilder.append(UUID.randomUUID().toString());		
-		signatureBuilder.append(":");
-		signatureBuilder.append(TokenUtils.MAGIC_KEY);
-
-		MessageDigest digest;
+	
+	public static Map<String, Object> verifyTokenJWT(String token, byte[] secret) throws CommonsException
+	{ 	
+		JWTVerifier verifier = new JWTVerifier(secret);
+		Map<String, Object> decoded = null;
+		
 		try {
-			digest = MessageDigest.getInstance("MD5");
-		} catch (NoSuchAlgorithmException e) {
-			throw new IllegalStateException("No MD5 algorithm available!");
+			decoded = verifier.verify(token);
+			System.out.println(decoded);
+		} catch (InvalidKeyException | NoSuchAlgorithmException | IllegalStateException | SignatureException
+				| IOException | JWTVerifyException e) {
+			throw new CommonsException(e.getMessage());
 		}
-
-		return new String(Hex.encode(digest.digest(signatureBuilder.toString().getBytes())));
+		
+		return decoded;
 	}
 }

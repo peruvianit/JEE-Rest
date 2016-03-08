@@ -3,6 +3,7 @@ package it.peruvianit.web.util;
 import org.jboss.resteasy.core.ResourceMethod;
 
 import it.peruvianit.commons.annotation.resource.ServiceIdentifier;
+import it.peruvianit.commons.annotation.resource.TypeAccessService;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -25,7 +26,9 @@ public final class SecurityUtil {
 	public static boolean isAnnotationSecure(final Annotation annotation) {
         boolean isSecured = false;
         if (annotation instanceof ServiceIdentifier) {
-            isSecured = true;
+        	if (((ServiceIdentifier) annotation).typeAccessService() == TypeAccessService.PRIVATE){
+        		isSecured = true;
+        	}
         }
         return isSecured;
     }

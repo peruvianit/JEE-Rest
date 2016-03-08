@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 
 import it.peruvanit.exception.RecordNotFoundException;
 import it.peruvianit.commons.annotation.resource.ServiceIdentifier;
+import it.peruvianit.commons.annotation.resource.TypeAccessService;
 import it.peruvianit.commons.util.token.TokenTransfer;
 import it.peruvianit.commons.util.token.UserDetails;
 import it.peruvianit.data.repository.RepositoryPersistenceLocal;
@@ -33,7 +34,7 @@ public class AuthenticationService extends AbstractResource {
 	@EJB
 	RepositoryPersistenceLocal repositoryPersistenceLocal;
 	
-	@ServiceIdentifier(identifier = 100)
+	@ServiceIdentifier(identifier = 100, typeAccessService = TypeAccessService.PUBLIC)
 	@Path("authenticate")
 	@POST	
 	@Produces(MediaType.APPLICATION_JSON)	
@@ -52,7 +53,7 @@ public class AuthenticationService extends AbstractResource {
 				throw new WebApplicationException("Accesso denegato");
 			}
 			
-			tokenTransfer = authenticationLocal.generateToken(userDetails);	
+			tokenTransfer = authenticationLocal.generateToken(userDetails, WebConstant.KEY_OAUTH_JWT, WebConstant.EXPIRATION_TOKEN_SECONDS);
 			
 			loginAccessDto.setAccessStatus(WebConstant.LOGIN_ACCESS_STATUS_SUCCESS);
 			

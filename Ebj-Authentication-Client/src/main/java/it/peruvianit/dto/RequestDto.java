@@ -12,6 +12,9 @@ public class RequestDto implements Serializable {
 	// UUID	
 	private UUID identifier;
 	
+	// User
+	private String userName;
+	
 	// Info Request
 	private Long startRequest;
 	private String ipAddressLocale;
@@ -44,6 +47,13 @@ public class RequestDto implements Serializable {
 		this.identifier = identifier;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	public Long getStartRequest() {
 		return startRequest;

@@ -2,27 +2,35 @@ package it.peruvianit.model.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the DOPA database table.
  * 
  */
 @Entity
-@Table(name = "TBL1003_REQUEST")
-public class Tbl1003Request implements Serializable {
-	private static final long serialVersionUID = 4597002742176979697L;
+@Table(name = "TBL1004_ERROR")
+public class Tbl1004Error implements Serializable {
+	private static final long serialVersionUID = 2906087494626366329L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "PRG_IDE_REQUEST", nullable = false, insertable = true, updatable = true)
-	private BigDecimal prgIdeRequest;
+	@Column(name = "PRG_IDE_ERROR", nullable = false, insertable = true, updatable = true)
+	private BigDecimal prgIdeError;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "TIME_STAMP", nullable = false)
+	private Date timestamp;
 
 	@Column(name = "IDENTIFIER_REQUEST", length = 100)
 	private String identifierRequest;
@@ -32,21 +40,6 @@ public class Tbl1003Request implements Serializable {
 
 	@Column(name = "TOKEN", length = 500)
 	private String token;
-	
-	@Column(name = "IP_ADDRESS_LOCAL", length = 60)
-	private String ipAddressLocal;
-	
-	@Column(name = "IP_ADDRESS_REMOTE", length = 60)
-	private String ipAddressRemote;
-	
-	@Column(name = "REQUEST_TIME")
-	private Long requestTime;
-	
-	@Column(name = "RESPONSE_TIME")
-	private Long responseTime;
-	
-	@Column(name = "ELAPSED_TIME")
-	private Long elapsedTime;
 	
 	@Column(name = "URI_API_REST", length = 255)
 	private String uriApiRest;
@@ -65,13 +58,32 @@ public class Tbl1003Request implements Serializable {
 	
 	@Column(name = "RESPONSE_CODE")
 	private Integer responseCode;
+	
+	@Column(name = "TYPE_EXCEPTION", length = 50)
+	private String typeException;
+	
+	@Column(name = "MESSAGE_EXCEPTION", length = 4000)
+	private String messageException;
 
-	public BigDecimal getPrgIdeRequest() {
-		return prgIdeRequest;
+	@PrePersist
+	public void updateData() {
+		timestamp = new Date();
+	}
+	
+	public BigDecimal getPrgIdeError() {
+		return prgIdeError;
 	}
 
-	public void setPrgIdeRequest(BigDecimal prgIdeRequest) {
-		this.prgIdeRequest = prgIdeRequest;
+	public void setPrgIdeError(BigDecimal prgIdeError) {
+		this.prgIdeError = prgIdeError;
+	}
+
+	public Date getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	public String getIdentifierRequest() {
@@ -96,46 +108,6 @@ public class Tbl1003Request implements Serializable {
 
 	public void setToken(String token) {
 		this.token = token;
-	}
-
-	public String getIpAddressLocal() {
-		return ipAddressLocal;
-	}
-
-	public void setIpAddressLocal(String ipAddressLocal) {
-		this.ipAddressLocal = ipAddressLocal;
-	}
-
-	public String getIpAddressRemote() {
-		return ipAddressRemote;
-	}
-
-	public void setIpAddressRemote(String ipAddressRemote) {
-		this.ipAddressRemote = ipAddressRemote;
-	}
-
-	public Long getRequestTime() {
-		return requestTime;
-	}
-
-	public void setRequestTime(Long requestTime) {
-		this.requestTime = requestTime;
-	}
-
-	public Long getResponseTime() {
-		return responseTime;
-	}
-
-	public void setResponseTime(Long responseTime) {
-		this.responseTime = responseTime;
-	}
-
-	public Long getElapsedTime() {
-		return elapsedTime;
-	}
-
-	public void setElapsedTime(Long elapsedTime) {
-		this.elapsedTime = elapsedTime;
 	}
 
 	public String getUriApiRest() {
@@ -186,22 +158,36 @@ public class Tbl1003Request implements Serializable {
 		this.responseCode = responseCode;
 	}
 
+	public String getTypeException() {
+		return typeException;
+	}
+
+	public void setTypeException(String typeException) {
+		this.typeException = typeException;
+	}
+
+	public String getMessageException() {
+		return messageException;
+	}
+
+	public void setMessageException(String messageException) {
+		this.messageException = messageException;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((agentBrowser == null) ? 0 : agentBrowser.hashCode());
 		result = prime * result + ((contentType == null) ? 0 : contentType.hashCode());
-		result = prime * result + ((elapsedTime == null) ? 0 : elapsedTime.hashCode());
 		result = prime * result + ((identifierRequest == null) ? 0 : identifierRequest.hashCode());
-		result = prime * result + ((ipAddressLocal == null) ? 0 : ipAddressLocal.hashCode());
-		result = prime * result + ((ipAddressRemote == null) ? 0 : ipAddressRemote.hashCode());
+		result = prime * result + ((messageException == null) ? 0 : messageException.hashCode());
 		result = prime * result + ((paramsQuery == null) ? 0 : paramsQuery.hashCode());
-		result = prime * result + ((prgIdeRequest == null) ? 0 : prgIdeRequest.hashCode());
-		result = prime * result + ((requestTime == null) ? 0 : requestTime.hashCode());
+		result = prime * result + ((prgIdeError == null) ? 0 : prgIdeError.hashCode());
 		result = prime * result + ((responseCode == null) ? 0 : responseCode.hashCode());
-		result = prime * result + ((responseTime == null) ? 0 : responseTime.hashCode());
+		result = prime * result + ((timestamp == null) ? 0 : timestamp.hashCode());
 		result = prime * result + ((token == null) ? 0 : token.hashCode());
+		result = prime * result + ((typeException == null) ? 0 : typeException.hashCode());
 		result = prime * result + ((uriApiRest == null) ? 0 : uriApiRest.hashCode());
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		result = prime * result + ((verbApiRest == null) ? 0 : verbApiRest.hashCode());
@@ -216,7 +202,7 @@ public class Tbl1003Request implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Tbl1003Request other = (Tbl1003Request) obj;
+		Tbl1004Error other = (Tbl1004Error) obj;
 		if (agentBrowser == null) {
 			if (other.agentBrowser != null)
 				return false;
@@ -227,55 +213,45 @@ public class Tbl1003Request implements Serializable {
 				return false;
 		} else if (!contentType.equals(other.contentType))
 			return false;
-		if (elapsedTime == null) {
-			if (other.elapsedTime != null)
-				return false;
-		} else if (!elapsedTime.equals(other.elapsedTime))
-			return false;
 		if (identifierRequest == null) {
 			if (other.identifierRequest != null)
 				return false;
 		} else if (!identifierRequest.equals(other.identifierRequest))
 			return false;
-		if (ipAddressLocal == null) {
-			if (other.ipAddressLocal != null)
+		if (messageException == null) {
+			if (other.messageException != null)
 				return false;
-		} else if (!ipAddressLocal.equals(other.ipAddressLocal))
-			return false;
-		if (ipAddressRemote == null) {
-			if (other.ipAddressRemote != null)
-				return false;
-		} else if (!ipAddressRemote.equals(other.ipAddressRemote))
+		} else if (!messageException.equals(other.messageException))
 			return false;
 		if (paramsQuery == null) {
 			if (other.paramsQuery != null)
 				return false;
 		} else if (!paramsQuery.equals(other.paramsQuery))
 			return false;
-		if (prgIdeRequest == null) {
-			if (other.prgIdeRequest != null)
+		if (prgIdeError == null) {
+			if (other.prgIdeError != null)
 				return false;
-		} else if (!prgIdeRequest.equals(other.prgIdeRequest))
-			return false;		
-		if (requestTime == null) {
-			if (other.requestTime != null)
-				return false;
-		} else if (!requestTime.equals(other.requestTime))
+		} else if (!prgIdeError.equals(other.prgIdeError))
 			return false;
 		if (responseCode == null) {
 			if (other.responseCode != null)
 				return false;
 		} else if (!responseCode.equals(other.responseCode))
 			return false;
-		if (responseTime == null) {
-			if (other.responseTime != null)
+		if (timestamp == null) {
+			if (other.timestamp != null)
 				return false;
-		} else if (!responseTime.equals(other.responseTime))
+		} else if (!timestamp.equals(other.timestamp))
 			return false;
 		if (token == null) {
 			if (other.token != null)
 				return false;
 		} else if (!token.equals(other.token))
+			return false;
+		if (typeException == null) {
+			if (other.typeException != null)
+				return false;
+		} else if (!typeException.equals(other.typeException))
 			return false;
 		if (uriApiRest == null) {
 			if (other.uriApiRest != null)
@@ -293,5 +269,7 @@ public class Tbl1003Request implements Serializable {
 		} else if (!verbApiRest.equals(other.verbApiRest))
 			return false;
 		return true;
-	}	
+	}
 }
+
+	

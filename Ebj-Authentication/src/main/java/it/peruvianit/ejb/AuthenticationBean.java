@@ -12,9 +12,11 @@ import it.peruvianit.commons.util.token.TokenUtils;
 import it.peruvianit.commons.util.token.UserDetails;
 import it.peruvianit.data.dao.Tbl1002LoginAccessDao;
 import it.peruvianit.data.dao.Tbl1003RequestDao;
+import it.peruvianit.data.dao.Tbl1004ErrorDao;
 import it.peruvianit.data.exception.DataAccesException;
 import it.peruvianit.data.repository.RepositoryPersistenceLocal;
 import it.peruvianit.dto.AccountDto;
+import it.peruvianit.dto.ErrorRequestDto;
 import it.peruvianit.dto.LoginAccessDto;
 import it.peruvianit.dto.RequestDto;
 import it.peruvianit.exception.AuthenticationSecurityException;
@@ -22,6 +24,7 @@ import it.peruvianit.interfaces.SecurityAuthenticator;
 import it.peruvianit.invoke.Authenticator;
 import it.peruvianit.model.entity.Tbl1002LoginAccess;
 import it.peruvianit.model.entity.Tbl1003Request;
+import it.peruvianit.model.entity.Tbl1004Error;
 
 /**
  * Session Bean implementation class Authentication
@@ -63,8 +66,8 @@ public class AuthenticationBean implements AuthenticationRemote, AuthenticationL
     	return accountDtoResponse;
     }
     
-    public TokenTransfer generateToken(UserDetails userDetails){    	
-    	return new TokenTransfer(TokenUtils.createToken(userDetails));
+    public TokenTransfer generateToken(UserDetails userDetails, byte[] secret, int expirationTokenSeconds){    	
+    	return new TokenTransfer(TokenUtils.createTokenJWT(userDetails, secret, expirationTokenSeconds));
     }
 
 	@Override
@@ -90,7 +93,7 @@ public class AuthenticationBean implements AuthenticationRemote, AuthenticationL
 		Tbl1003Request tbl1003Request = new Tbl1003Request();
 		
 		tbl1003Request.setIdentifierRequest(requestDto.getIdentifier().toString());
-		tbl1003Request.setUserName("--MANCANTE--");
+		tbl1003Request.setUserName(requestDto.getUserName());
 		tbl1003Request.setToken(requestDto.getRequestSignature());
 		tbl1003Request.setIpAddressLocal(requestDto.getIpAddressLocale());
 		tbl1003Request.setIpAddressRemote(requestDto.getIpAddressRemote());
@@ -108,8 +111,7 @@ public class AuthenticationBean implements AuthenticationRemote, AuthenticationL
 			Tbl1003RequestDao.getInstance(repositoryPersistenceLocal.getEntityManager()).save(tbl1003Request);
 		} catch (Exception e) {
 			throw new AuthenticationSecurityException(e.getMessage());
-		}
-		
+		}		
 	}
 
 	@Override
@@ -128,5 +130,29 @@ public class AuthenticationBean implements AuthenticationRemote, AuthenticationL
 			throw new AuthenticationSecurityException(e.getMessage());
 		}
 		return accountDto;
+	}
+
+	@Override
+	public void saveErrorRequest(ErrorRequestDto errorRequestDto) throws AuthenticationSecurityException {
+		Tbl1004Error tbl1004Error = new Tbl1004Error();
+		
+		tbl1004Error.setIdentifierRequest(errorRequestDto.getIdentifier().toString());		
+		tbl1004Error.setUserName(errorRequestDto.getUserName());
+		tbl1004Error.setToken(errorRequestDto.getRequestSignature());
+		tbl1004Error.setUriApiRest(errorRequestDto.getReference());
+		tbl1004Error.setVerbApiRest(errorRequestDto.getMethod());
+		tbl1004Error.setParamsQuery(errorRequestDto.getParamsQuery());
+		tbl1004Error.setAgentBrowser(errorRequestDto.getAgent());
+		tbl1004Error.setContentType(errorRequestDto.getContentType());		
+		tbl1004Error.setResponseCode(errorRequestDto.getResponseCode());
+		tbl1004Error.setTypeException(errorRequestDto.getType());
+		tbl1004Error.setMessageException(errorRequestDto.getMessage());
+		
+		try {
+			Tbl1004ErrorDao.getInstance(repositoryPersistenceLocal.getEntityManager()).save(tbl1004Error);
+		} catch (Exception e) {
+			throw new AuthenticationSecurityException(e.getMessage());
+		}	
+		
 	}	
 }

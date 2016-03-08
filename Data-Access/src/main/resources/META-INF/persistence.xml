@@ -9,7 +9,8 @@
 		<mapping-file>META-INF/orm_authentication.xml</mapping-file>		
 		<class>it.peruvianit.model.entity.Tbl1001User</class>
 		<class>it.peruvianit.model.entity.Tbl1002LoginAccess</class>	
-		<class>it.peruvianit.model.entity.Tbl1003Request</class>			
+		<class>it.peruvianit.model.entity.Tbl1003Request</class>	
+		<class>it.peruvianit.model.entity.Tbl1004Error</class>		
 		<properties>
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />

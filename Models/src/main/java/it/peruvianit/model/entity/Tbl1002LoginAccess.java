@@ -31,7 +31,7 @@ public class Tbl1002LoginAccess implements Serializable {
 	@Column(name = "USER_NAME", nullable = false, length = 30)
 	private String userName;
 
-	@Column(name = "TOKEN", nullable = false, length = 60)
+	@Column(name = "TOKEN", nullable = false, length = 500)
 	private String token;
 	
 	@Column(name = "IP_ADDRESS", nullable = false, length = 60)

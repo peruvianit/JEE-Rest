@@ -23,11 +23,13 @@ import org.jboss.resteasy.spi.HttpRequest;
 import org.jboss.resteasy.spi.NotFoundException;
 import org.jboss.resteasy.spi.interception.PostProcessInterceptor;
 import org.jboss.resteasy.spi.interception.PreProcessInterceptor;
+import org.springframework.beans.BeanUtils;
 
 import it.peruvianit.commons.exception.IException;
 import it.peruvianit.commons.util.DateUtils;
 import it.peruvianit.commons.util.GsonUtils;
 import it.peruvianit.dto.AccountDto;
+import it.peruvianit.dto.ErrorRequestDto;
 import it.peruvianit.dto.RequestDto;
 import it.peruvianit.ejb.AuthenticationLocal;
 import it.peruvianit.exception.AuthenticationSecurityException;
@@ -90,14 +92,14 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 				final Date expirationDate = accountDto.getExpirationDate();
 				
 				if (expirationDate != null && System.currentTimeMillis() < expirationDate.getTime()){
-					this.logger.debug("Request Signature Not Expired");					
+					this.logger.debug("Request Signature Not Expired");	
+					requestDto.setUserName(accountDto.getAccount());		
 				}else{
 					beanError = createBeanError(WebConstant.TYPE_EXCEPTION_APPLICATION,
 												StatusCode.AUTHORIZATION_REQUIRED,
 												"Invalid Request Signature : {requestSignature :" + requestSignature + "}",
 												requestUrl);
-				}
-				
+				}				
 			}else{
 				beanError = createBeanError(WebConstant.TYPE_EXCEPTION_APPLICATION,
 											StatusCode.BAD_REQUEST,
@@ -106,6 +108,7 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 			}
 			
 			if (beanError != null){
+				saveErrorRequest(beanError);
 				response = this.buildResponse(StatusCode.BAD_REQUEST.getCode(),GsonUtils.objToJson(beanError));
 			}				
 		}
@@ -170,6 +173,7 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 		requestDto.setResponseCode(statusCode.getCode());
 		
 		saveRequest();
+		saveErrorRequest(beanError);
 		
 		return Response.status(statusCode.getCode()).entity(GsonUtils.objToJson(beanError)).build();		
 	}
@@ -210,6 +214,21 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 	private void saveRequest(){
 		try {
 			authenticationLocal.saveRequest(requestDto);
+		} catch (AuthenticationSecurityException aEx) {
+			logger.error(aEx.getMessage());
+		}
+	}
+	
+	private void saveErrorRequest(BeanError beanError){
+		try {
+			ErrorRequestDto errorRequestDto = new ErrorRequestDto();
+			
+			BeanUtils.copyProperties(requestDto, errorRequestDto);
+			
+			errorRequestDto.setType(beanError.getType());
+			errorRequestDto.setMessage(beanError.getMessage());
+			
+			authenticationLocal.saveErrorRequest(errorRequestDto);
 		} catch (AuthenticationSecurityException aEx) {
 			logger.error(aEx.getMessage());
 		}
