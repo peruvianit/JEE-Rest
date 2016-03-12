@@ -11,6 +11,9 @@ public class WebConstant	 {
 	public static final byte[] KEY_OAUTH_JWT = new byte[] { 112, 101, 114, 117, 118, 105, 110, 105, 116};
 	public static final int EXPIRATION_TOKEN_SECONDS = 21600;
 	
+	public static final String SERVER_CONFIG_DIR = "jboss.server.config.dir";
+	public static final String WEB_APLICATION_PROPERTIES = "jeeRestApi.properties";
+	
 	public static final String LOGIN_ACCESS_STATUS_SUCCESS = "S";
 	public static final String LOGIN_ACCESS_STATUS_INCORRECT_CREDENTIAL = "I";	
 }
