@@ -1,7 +1,9 @@
 package it.peruvianit.web.interceptor;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.ejb.EJB;
@@ -241,8 +243,10 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 		try {
 			BeanMessageEmail beanMessageEmail = new BeanMessageEmail();
 			beanMessageEmail.setSubject("Problemi Applicazione JeeRestApi V.1.0");
-			beanMessageEmail.setMsg(GsonUtils.objToJsonPrettyPrinting(beanError));
-			//beanMessageEmail.getAddTo().add("sergioarellanodiaz@gmail.com");
+			Map<String,Object> mapObject = new LinkedHashMap<>();
+			mapObject.put("Response", requestDto);
+			mapObject.put("Error", beanError);
+			beanMessageEmail.setMsg(GsonUtils.objToJsonPrettyPrinting(mapObject));
 			SmtpEmail.sendMessage(beanMessageEmail);
 		} catch (it.peruvianit.web.exception.WebApplicationException e) {
 			logger.error(e.getMessage());

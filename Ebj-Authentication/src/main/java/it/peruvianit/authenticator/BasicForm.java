@@ -32,7 +32,7 @@ public final class BasicForm extends Account implements SecurityAuthenticator{
 			
 			if (userDto != null){
 				if (!encryptorAdapter.decrypt(accountDto.getPassword(), userDto.getPassword())){
-					throw new IncorrectCredentialsException("Incorrect Credentials Exception {userName : '" + accountDto.getAccount() + "'}");
+					throw new IncorrectCredentialsException("Incorrect Credentials {userName : '" + accountDto.getAccount() + "'}");
 				}
 			}
 			
