@@ -34,8 +34,10 @@ import it.peruvianit.dto.RequestDto;
 import it.peruvianit.ejb.AuthenticationLocal;
 import it.peruvianit.exception.AuthenticationSecurityException;
 import it.peruvianit.web.bean.BeanError;
+import it.peruvianit.web.bean.BeanMessageEmail;
 import it.peruvianit.web.constant.WebConstant;
 import it.peruvianit.web.error.StatusCode;
+import it.peruvianit.web.messages.SmtpEmail;
 import it.peruvianit.web.util.RequestUtil;
 import it.peruvianit.web.util.SecurityUtil;
 
@@ -174,6 +176,7 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 		
 		saveRequest();
 		saveErrorRequest(beanError);
+		sendEmail(beanError);
 		
 		return Response.status(statusCode.getCode()).entity(GsonUtils.objToJson(beanError)).build();		
 	}
@@ -234,6 +237,17 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 		}
 	}
 	
+	private void sendEmail(BeanError beanError){
+		try {
+			BeanMessageEmail beanMessageEmail = new BeanMessageEmail();
+			beanMessageEmail.setSubject("Problemi Applicazione JeeRestApi V.1.0");
+			beanMessageEmail.setMsg(GsonUtils.objToJsonPrettyPrinting(beanError));
+			//beanMessageEmail.getAddTo().add("sergioarellanodiaz@gmail.com");
+			SmtpEmail.sendMessage(beanMessageEmail);
+		} catch (it.peruvianit.web.exception.WebApplicationException e) {
+			logger.error(e.getMessage());
+		}
+	}
 	private BeanError createBeanError(String typeException,StatusCode statusCode,String messageError, String urlRelative){
 		return new BeanError(new Date(),
 							 requestDto.getIdentifier(),											
