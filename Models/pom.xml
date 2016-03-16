@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>it.peruvianit.model</groupId>
-  <artifactId>models</artifactId>
+  <artifactId>Models</artifactId>
   <name>Models</name>
   
   <parent>
   	<groupId>it.peruvianit.jee</groupId>
-  	<artifactId>jee</artifactId>
-  	<version>${global.version}</version>
+  	<artifactId>Master</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
   	<relativePath>../Master/pom.xml</relativePath>
   </parent>  
   <dependencies>
@@ -26,7 +26,7 @@
 	<!-- PROJECT DEPENDENCIES -->
     <dependency>
     	<groupId>it.peruvianit</groupId>
-    	<artifactId>commons</artifactId>
+    	<artifactId>Commons</artifactId>
     	<type>jar</type>
     	<version>${global.version}</version>
     </dependency>

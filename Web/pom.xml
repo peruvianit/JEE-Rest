@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>web</artifactId>
+    <artifactId>Web</artifactId>
     <packaging>war</packaging>
-    <name>web</name>
+    <name>Web</name>
     <description>A starter Java EE 6 webapp project for use on JBoss EAP 6, generated from the jboss-javaee6-webapp archetype</description>
     
     <parent>
     	<groupId>it.peruvianit.jee</groupId>
-    	<artifactId>jee</artifactId>
-    	<version>${global.version}</version>
+    	<artifactId>Master</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
   		<relativePath>../Master/pom.xml</relativePath>
     </parent>
     
@@ -62,25 +62,25 @@
 		<!-- PROJECT DEPENDENCIES -->
         <dependency>
         	<groupId>it.peruvianit.jee</groupId>
-        	<artifactId>authentication-client</artifactId>
+        	<artifactId>Ebj-Authentication-Client</artifactId>
         	<type>ejb</type>
         	<version>${global.version}</version>
         </dependency>
         <dependency>
         	<groupId>it.peruvianit.jee</groupId>
-        	<artifactId>authentication</artifactId>
+        	<artifactId>Ebj-Authentication</artifactId>
         	<type>ejb</type>
         	<version>${global.version}</version>
         </dependency>
         <dependency>
         	<groupId>it.peruvianit.jee</groupId>
-        	<artifactId>administration-client</artifactId>
+        	<artifactId>Ejb-Administration-Client</artifactId>
         	<type>ejb</type>
         	<version>${global.version}</version>
         </dependency>     
         <dependency>
         	<groupId>it.peruvianit.jee</groupId>
-        	<artifactId>administration</artifactId>
+        	<artifactId>Ejb-Administration</artifactId>
         	<type>ejb</type>
         	<version>${global.version}</version>
         </dependency>  

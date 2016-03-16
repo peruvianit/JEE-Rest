@@ -3,12 +3,12 @@
   
   <parent>
     	<groupId>it.peruvianit.jee</groupId>
-    	<artifactId>jee</artifactId>
-    	<version>${global.version}</version>
+    	<artifactId>Master</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
   		<relativePath>../Master/pom.xml</relativePath>
   </parent>
   
-  <artifactId>administration-client</artifactId>
+  <artifactId>Ejb-Administration-Client</artifactId>
   <name>Ejb-Administration-client</name>
   
   <dependencies>
@@ -35,7 +35,7 @@
 		
         <dependency>
         	<groupId>it.peruvianit</groupId>
-        	<artifactId>commons</artifactId>
+        	<artifactId>Commons</artifactId>
         	<version>${global.version}</version>
         </dependency>        	
   </dependencies>  

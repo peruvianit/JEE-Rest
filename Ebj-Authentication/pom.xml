@@ -3,12 +3,12 @@
   
   <parent>
     	<groupId>it.peruvianit.jee</groupId>
-    	<artifactId>jee</artifactId>
-    	<version>${global.version}</version>
+    	<artifactId>Master</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
   		<relativePath>../Master/pom.xml</relativePath>
   </parent>
   
-  <artifactId>authentication</artifactId>
+  <artifactId>Ebj-Authentication</artifactId>
   
   <dependencies>
 		<dependency>
@@ -34,21 +34,22 @@
 		
 		<dependency>
 			<groupId>it.peruvianit</groupId>
-			<artifactId>commons</artifactId>
+			<artifactId>Commons</artifactId>
 			<version>${global.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>it.peruvianit.jee</groupId>
-			<artifactId>authentication-client</artifactId>
+			<artifactId>Ebj-Authentication-Client</artifactId>
 			<version>${global.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>it.peruvianit.jee</groupId>
-			<artifactId>administration</artifactId>
+			<artifactId>Ejb-Administration</artifactId>
 			<version>${global.version}</version>
 		</dependency>
 		
   </dependencies>
+  <name>Ebj-Authentication</name>
 </project>
