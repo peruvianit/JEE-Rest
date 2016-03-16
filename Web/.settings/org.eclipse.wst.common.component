@@ -4,25 +4,25 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
-        <dependent-module archiveName="authentication-client-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Ejb-Authentication-client/Ejb-Authentication-client">
+        <dependent-module archiveName="authentication-client-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/authentication-client/authentication-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="commons-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Commons/Commons">
+        <dependent-module archiveName="commons-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/commons/commons">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="authentication-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Ejb-Authentication/Ejb-Authentication">
+        <dependent-module archiveName="authentication-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/authentication/authentication">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="administration-client-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Ejb-Administration-client/Ejb-Administration-client">
+        <dependent-module archiveName="administration-client-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/administration-client/administration-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="administration-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Ejb-Administration/Ejb-Administration">
+        <dependent-module archiveName="administration-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/administration/administration">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="jpa-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Data-Access/Data-Access">
+        <dependent-module archiveName="jpa-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jpa/jpa">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="models-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Models/Models">
+        <dependent-module archiveName="models-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/models/models">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/Web-App/target/classes"/>

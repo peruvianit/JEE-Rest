@@ -77,6 +77,7 @@ public class AuthenticationBean implements AuthenticationRemote, AuthenticationL
 		tbl1002LoginAccess.setToken(loginAccessDto.getToken());
 		tbl1002LoginAccess.setIpAddress(loginAccessDto.getUserDetails().getIpAddress());
 		tbl1002LoginAccess.setTypeAccess(loginAccessDto.getTypeAccess());
+		tbl1002LoginAccess.setIdUserAgent(loginAccessDto.getUserDetails().getId());
 		tbl1002LoginAccess.setBrowser(loginAccessDto.getUserDetails().getBrowser());
 		tbl1002LoginAccess.setOs(loginAccessDto.getUserDetails().getNameOperatingSystem());
 		tbl1002LoginAccess.setStatus(loginAccessDto.getAccessStatus());

@@ -5,6 +5,7 @@ public class UserDetails {
 	private String ipAddress;
 	private String macAddress;
 	
+	private Integer id;
 	private String browser;
 	private String browserType;
 	private String browserVersion;
@@ -36,6 +37,14 @@ public class UserDetails {
 	
 	public void setMacAddress(String macAddress) {
 		this.macAddress = macAddress;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getBrowser() {

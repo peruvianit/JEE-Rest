@@ -22,6 +22,7 @@ public class RequestUtil {
 		String macAddress = "";
 		
 		// INFO BROWSER
+		Integer id = userAgent.getId();
 		String browser = userAgent.getBrowser().getName();
 		String browserType = userAgent.getBrowser().getBrowserType().getName();
 		String browserVersion = userAgent.getBrowserVersion().getVersion();
@@ -33,6 +34,7 @@ public class RequestUtil {
 		userDetails.setIpAddress(ipAddress);
 		userDetails.setMacAddress(macAddress);
 		userDetails.setUsername(userRemote);
+		userDetails.setId(id);
 		userDetails.setBrowser(browser);
 		userDetails.setBrowserType(browserType);
 		userDetails.setBrowserVersion(browserVersion);

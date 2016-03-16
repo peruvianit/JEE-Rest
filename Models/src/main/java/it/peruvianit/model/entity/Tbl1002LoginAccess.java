@@ -51,6 +51,9 @@ public class Tbl1002LoginAccess implements Serializable {
 	@Column(name = "TYPE_ACCESS", nullable = false, length = 20)
 	private String typeAccess;
 	
+	@Column(name = "ID_USER_AGENT", nullable= true)
+	private Integer idUserAgent;
+	
 	@Column(name = "BROWSER", nullable= true, length = 40)
 	private String browser;
 	
@@ -129,6 +132,15 @@ public class Tbl1002LoginAccess implements Serializable {
 		this.typeAccess = typeAccess;
 	}
 
+	
+	public Integer getIdUserAgent() {
+		return idUserAgent;
+	}
+
+	public void setIdUserAgent(Integer idUserAgent) {
+		this.idUserAgent = idUserAgent;
+	}
+
 	public String getBrowser() {
 		return browser;
 	}
@@ -157,6 +169,7 @@ public class Tbl1002LoginAccess implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((idUserAgent == null) ? 0 : idUserAgent.hashCode());
 		result = prime * result + ((browser == null) ? 0 : browser.hashCode());
 		result = prime * result + ((elapsedTime == null) ? 0 : elapsedTime.hashCode());
 		result = prime * result + ((ipAddress == null) ? 0 : ipAddress.hashCode());
@@ -179,6 +192,11 @@ public class Tbl1002LoginAccess implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Tbl1002LoginAccess other = (Tbl1002LoginAccess) obj;
+		if (idUserAgent == null) {
+			if (other.idUserAgent != null)
+				return false;
+		} else if (!idUserAgent.equals(other.idUserAgent))
+			return false;
 		if (browser == null) {
 			if (other.browser != null)
 				return false;
