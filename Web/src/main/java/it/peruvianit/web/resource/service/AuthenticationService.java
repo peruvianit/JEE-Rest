@@ -69,7 +69,8 @@ public class AuthenticationService extends AbstractResource {
 				loginAccessDto.setUserDetails(userDetails);
 				loginAccessDto.setTypeAccess(accountDtoRequest.getTypeAccessAccount().toString());
 				
-				authenticationLocal.saveLoginAccess(loginAccessDto);			
+				authenticationLocal.updateClientAccess(loginAccessDto);
+				authenticationLocal.saveLoginAccess(loginAccessDto);					
 			}catch(Exception ex){			
 				throw new SaveLoginAccessException(ex.getMessage());
 			}			

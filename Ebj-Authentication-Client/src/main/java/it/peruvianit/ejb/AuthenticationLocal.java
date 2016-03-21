@@ -19,4 +19,5 @@ public interface AuthenticationLocal {
 	void saveRequest(RequestDto requestDto) throws AuthenticationSecurityException;
 	AccountDto findByRequestSignature(String requestSignature) throws AuthenticationSecurityException;
 	void saveErrorRequest(ErrorRequestDto errorRequestDto) throws AuthenticationSecurityException;
+	void updateClientAccess(LoginAccessDto loginAccessDto) throws AuthenticationSecurityException;
 }

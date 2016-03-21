@@ -1,5 +1,7 @@
 package it.peruvianit.ejb;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -13,6 +15,7 @@ import it.peruvianit.commons.util.token.UserDetails;
 import it.peruvianit.data.dao.Tbl1002LoginAccessDao;
 import it.peruvianit.data.dao.Tbl1003RequestDao;
 import it.peruvianit.data.dao.Tbl1004ErrorDao;
+import it.peruvianit.data.dao.Tbl1005ClientAccessDao;
 import it.peruvianit.data.exception.DataAccesException;
 import it.peruvianit.data.repository.RepositoryPersistenceLocal;
 import it.peruvianit.dto.AccountDto;
@@ -25,6 +28,7 @@ import it.peruvianit.invoke.Authenticator;
 import it.peruvianit.model.entity.Tbl1002LoginAccess;
 import it.peruvianit.model.entity.Tbl1003Request;
 import it.peruvianit.model.entity.Tbl1004Error;
+import it.peruvianit.model.entity.Tbl1005ClientAccess;
 
 /**
  * Session Bean implementation class Authentication
@@ -156,4 +160,24 @@ public class AuthenticationBean implements AuthenticationRemote, AuthenticationL
 		}	
 		
 	}	
+	
+	@Override
+	public void updateClientAccess(LoginAccessDto loginAccessDto) throws AuthenticationSecurityException {
+		try {
+			List<Tbl1002LoginAccess> listTbl1002LoginAccess = Tbl1002LoginAccessDao.getInstance(repositoryPersistenceLocal.getEntityManager()).findByIdUserAgent(loginAccessDto.getUserDetails().getId());
+			
+			if(listTbl1002LoginAccess.size() == 0){
+				Tbl1005ClientAccess tbl1005ClientAccess = new Tbl1005ClientAccess();
+				tbl1005ClientAccess.setIdUserAgent(loginAccessDto.getUserDetails().getId());
+				tbl1005ClientAccess.setUserName(loginAccessDto.getUserDetails().getUsername());
+				tbl1005ClientAccess.setIpAddress(loginAccessDto.getUserDetails().getIpAddress());
+				tbl1005ClientAccess.setTypeAccess(loginAccessDto.getTypeAccess());
+				tbl1005ClientAccess.setOs(loginAccessDto.getUserDetails().getNameOperatingSystem());
+				tbl1005ClientAccess.setBrowser(loginAccessDto.getUserDetails().getBrowser());
+				Tbl1005ClientAccessDao.getInstance(repositoryPersistenceLocal.getEntityManager()).save(tbl1005ClientAccess);
+			}			
+		} catch (Exception e) {
+			throw new AuthenticationSecurityException(e.getMessage());
+		}
+	}
 }

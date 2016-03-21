@@ -1,5 +1,7 @@
 package it.peruvianit.data.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
@@ -30,5 +32,13 @@ public class Tbl1002LoginAccessDao extends GenericDao {
 		query.setParameter("requestSignature", requestSignature);
 		
 		return query.getSingleResult();
+	}
+	
+	public List<Tbl1002LoginAccess> findByIdUserAgent(Integer idUserAgent) throws DataAccesException {
+		TypedQuery<Tbl1002LoginAccess> query = em.createNamedQuery(DataAccessConstant.TBL1002LOGIN_ACCESS_FIND_BY_ID_USER_AGENT,Tbl1002LoginAccess.class);
+
+		query.setParameter("idUserAgent", idUserAgent);
+		
+		return query.getResultList();
 	}
 }

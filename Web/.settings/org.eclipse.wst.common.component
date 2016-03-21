@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="web">
+    <wb-module deploy-name="Web">
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
-        <dependent-module archiveName="Ebj-Authentication-Client-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Ebj-Authentication-Client/Ebj-Authentication-Client">
+        <dependent-module archiveName="Ebj-Authentication-Client-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Ejb-Authentication-Client/Ejb-Authentication-Client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="Commons-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Commons/Commons">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="Ebj-Authentication-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Ebj-Authentication/Ebj-Authentication">
+        <dependent-module archiveName="Ebj-Authentication-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Ejb-Authentication/Ejb-Authentication">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="Ejb-Administration-Client-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Ejb-Administration-Client/Ejb-Administration-Client">
@@ -26,6 +26,6 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/Web-App/target/classes"/>
-        <property name="context-root" value="web"/>
+        <property name="context-root" value="Web"/>
     </wb-module>
 </project-modules>
