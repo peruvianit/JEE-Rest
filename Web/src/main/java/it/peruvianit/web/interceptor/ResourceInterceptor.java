@@ -241,12 +241,14 @@ public class ResourceInterceptor implements PreProcessInterceptor, PostProcessIn
 	
 	private void sendEmail(BeanError beanError){
 		try {
-			BeanMessageEmail beanMessageEmail = new BeanMessageEmail();
-			beanMessageEmail.setSubject("Problemi Applicazione JeeRestApi V.1.0");
 			Map<String,Object> mapObject = new LinkedHashMap<>();
 			mapObject.put("Response", requestDto);
 			mapObject.put("Error", beanError);
-			beanMessageEmail.setMsg(GsonUtils.objToJsonPrettyPrinting(mapObject));
+			
+			BeanMessageEmail beanMessageEmail = new BeanMessageEmail("errorEmail.ftl");
+			beanMessageEmail.setSubject("Problemi Applicazione JeeRestApi V.1.0");
+			beanMessageEmail.getMsg().put("message", GsonUtils.objToJsonPrettyPrinting(mapObject));
+			
 			SmtpEmail.sendMessage(beanMessageEmail);
 		} catch (it.peruvianit.web.exception.WebApplicationException e) {
 			logger.error(e.getMessage());

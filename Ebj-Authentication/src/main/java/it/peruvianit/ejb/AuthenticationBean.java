@@ -162,7 +162,8 @@ public class AuthenticationBean implements AuthenticationRemote, AuthenticationL
 	}	
 	
 	@Override
-	public void updateClientAccess(LoginAccessDto loginAccessDto) throws AuthenticationSecurityException {
+	public boolean isNewClientAccess(LoginAccessDto loginAccessDto) throws AuthenticationSecurityException {
+		boolean isNewClient = false;
 		try {
 			List<Tbl1002LoginAccess> listTbl1002LoginAccess = Tbl1002LoginAccessDao.getInstance(repositoryPersistenceLocal.getEntityManager()).findByIdUserAgent(loginAccessDto.getUserDetails().getId());
 			
@@ -175,9 +176,11 @@ public class AuthenticationBean implements AuthenticationRemote, AuthenticationL
 				tbl1005ClientAccess.setOs(loginAccessDto.getUserDetails().getNameOperatingSystem());
 				tbl1005ClientAccess.setBrowser(loginAccessDto.getUserDetails().getBrowser());
 				Tbl1005ClientAccessDao.getInstance(repositoryPersistenceLocal.getEntityManager()).save(tbl1005ClientAccess);
+				isNewClient = true;
 			}			
 		} catch (Exception e) {
 			throw new AuthenticationSecurityException(e.getMessage());
 		}
+		return isNewClient;
 	}
 }

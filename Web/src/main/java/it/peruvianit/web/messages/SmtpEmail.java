@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
@@ -31,15 +29,14 @@ public class SmtpEmail {
 	private static String password;
 	private static String from;
 	
-	public static void sendMessage(BeanMessageEmail beanMessageEmail) throws WebApplicationException{
-		final String templateEmail = "errorEmail.ftl";
-		
+	public static void sendMessage(BeanMessageEmail beanMessageEmail) throws WebApplicationException{	
+		String templateEmail = beanMessageEmail.getTemplateEmail();
 		HtmlEmail email = new HtmlEmail();
+		
 		email.setHostName(SmtpEmail.hostName);
 		email.setSmtpPort(SmtpEmail.port);
 		email.setAuthenticator(new DefaultAuthenticator(SmtpEmail.username, SmtpEmail.password));
 		email.setSSLOnConnect(true);
-		
 		
 		try {			
 			String serverConfigDir = System.getProperty(WebConstant.SERVER_CONFIG_DIR);
@@ -50,12 +47,9 @@ public class SmtpEmail {
 			
 			cfg.setDefaultEncoding("UTF-8");
 			cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-			
-			Map<String, Object> map = new HashMap<>();
-	        map.put("message", beanMessageEmail.getMsg());
        
 	        Writer out = new StringWriter();
-            template.process(map, out);
+	        template.process(beanMessageEmail.getMsg(), out);
 			
 			email.setFrom(SmtpEmail.from);		
 			email.setSubject(beanMessageEmail.getSubject());

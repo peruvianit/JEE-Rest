@@ -1,14 +1,20 @@
 package it.peruvianit.web.bean;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BeanMessageEmail {
 	private String subject;
-	private String msg;
+	private Map<String,Object> msg = new HashMap<>();
 	private List<String> addTo = new ArrayList<String>();
 	
-	public BeanMessageEmail(){};
+	private String templateEmail;
+	
+	public BeanMessageEmail(String templateEmail){
+		this.templateEmail = templateEmail;
+	};
 	
 	public String getSubject() {
 		return subject;
@@ -16,10 +22,10 @@ public class BeanMessageEmail {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	public String getMsg() {
+	public Map<String, Object> getMsg() {
 		return msg;
 	}
-	public void setMsg(String msg) {
+	public void setMsg(Map<String, Object> msg) {
 		this.msg = msg;
 	}
 	public List<String> getAddTo() {
@@ -27,5 +33,13 @@ public class BeanMessageEmail {
 	}
 	public void setAddTo(List<String> addTo) {
 		this.addTo = addTo;
+	}
+
+	public String getTemplateEmail() {
+		return templateEmail;
+	}
+
+	public void setTemplateEmail(String templateEmail) {
+		this.templateEmail = templateEmail;
 	}
 }
