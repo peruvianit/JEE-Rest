@@ -1,8 +1,5 @@
 package it.peruvianit.web.resource.service;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
@@ -30,7 +27,6 @@ import it.peruvianit.exception.SaveLoginAccessException;
 import it.peruvianit.web.bean.BeanMessageEmail;
 import it.peruvianit.web.constant.WebConstant;
 import it.peruvianit.web.exception.WebApplicationException;
-import it.peruvianit.web.interceptor.ResourceInterceptor;
 import it.peruvianit.web.messages.SmtpEmail;
 import it.peruvianit.web.resource.base.AbstractResource;
 import it.peruvianit.web.util.RequestUtil;
